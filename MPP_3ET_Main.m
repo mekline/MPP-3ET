@@ -1,4 +1,4 @@
-   function MPP_2ET_Main(SubjectID, Condition, ToExtend, Set, varargin)
+   function MPP_3ET_Main(SubjectID, Condition, ToExtend, Set, varargin)
 % The new MPP, for eyetracking 2yos. The new excitement is that
 % this version has refactored the common resources for PTB,
 % eyetracking, and common stimuli for easier/more economical
@@ -15,7 +15,7 @@ p.addRequired('Condition');
 p.addRequired('ToExtend');
 p.addRequired('Set');
 p.addParamValue('use_eyetracker', 1, @isnumeric); %use 0 for no eyetracker
-p.addParamValue('experiment_name', 'MPPCREATION', @isstr);
+p.addParamValue('experiment_name', 'MPP3ET', @isstr);
 p.addParamValue('eyetracker_name', 'Lion', @isstr); %in case you have multiple eyetrackers in the lab...
 p.addParamValue('calib_version', 'Kid', @isstr); %can replace with 'Kid' for a cooler kid display. 
 p.addParamValue('max_calib', 5, @isnumeric); %in case we want to NOT loop on the calibration forever.
@@ -56,7 +56,7 @@ addpath(genpath('/Applications/TobiiProSDK'));
 addpath(genpath('/Applications/PsychToolBox'));
 addpath(genpath('/Users/snedlab/Desktop/MPP-Common-Resources'));
 RESOURCEFOLDER = '/Users/snedlab/Desktop/MPP-Common-Resources';
-EXPFOLDER = fileparts(which('MPP_2ET_Main.m')); %add this folder to the path too.
+EXPFOLDER = fileparts(which('MPP_3ET_Main.m')); %add this folder to the path too.
 addpath(genpath(EXPFOLDER));
 mkdir([EXPFOLDER, '/Data/', SUBJECT]);
 DATAFOLDER = [EXPFOLDER, '/Data/', SUBJECT];
