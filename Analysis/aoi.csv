@@ -1,0 +1,333 @@
+Trial_description,X_min,Y_min,X_max,Y_max
+Experiment Start,,,,
+Start_Practice_Trial ,,,,
+ambigAudio_Practice ,,,,
+ambigVideo_Practice ,0.35,0.1963,0.93,0.6313
+ambigAudio_Practice_1_ball,,,,
+ambigVideo_Practice_1_ball,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_1_ball,,,,
+trainingVideo_Practice_1_ball,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_3_ball,,,,
+trainingVideo_Practice_3_ball,0.35,0.1963,0.93,0.6313
+testAudio_Practice_ball,,,,
+left_testVideo_Practice_ball,0.25,0.1963,0.605,0.6313
+right_testVideo_Practice_ball,0.67,0.1963,1.25,0.6313
+testAudio_Practice_ball,,,,
+testVideos_Practice_ball,0.25,0.1963,1.25,0.6313
+End_Practice_Trial_1 ,,,,
+recenter ,,,,
+Start_Practice_Trial_2 ,,,,
+ambigAudio_Practice_book,,,,
+ambigVideo_Practice_book,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_1_book,,,,
+trainingVideo_Practice_1_book,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_2_book,,,,
+trainingVideo_Practice_2_book,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_3_book,,,,
+trainingVideo_Practice_3_book,0.35,0.1963,0.93,0.6313
+testAudio_Practice_book,,,,
+left_testVideo_Practice_book,0.25,0.1963,0.605,0.6313
+right_testVideo_Practice_book,0.67,0.1963,1.25,0.6313
+testAudio_Practice_book,,,,
+testVideos_Practice_book,0.25,0.1963,1.25,0.6313
+End_Practice_Trial_2 ,,,,
+recenter ,,,,
+Start_Practice_Trial_3 ,,,,
+ambigAudio_Practice_1_bear,,,,
+ambigVideo_Practice_1_bear,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_1_bear,,,,
+trainingVideo_Practice_1_bear,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_1_bear,,,,
+trainingVideo_Practice_2_bear,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_3_bear,,,,
+trainingVideo_Practice_3_bear,0.35,0.1963,0.93,0.6313
+testAudio_Practice_bear,,,,
+left_testVideo_Practice_bear,0.25,0.1963,0.605,0.6313
+right_testVideo_Practice_bear,0.67,0.1963,1.25,0.6313
+testAudio_Practice_bear,,,,
+testVideos_Practice_bear,0.25,0.1963,1.25,0.6313
+End__Practice_Trial_3 ,,,,
+recenter ,,,,
+Start_Practice_Trial_4 ,,,,
+ambigAudio_Practice_car,,,,
+ambigVideo_Practice_car,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_1_car,,,,
+trainingVideo_Practice_1_car,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_2_car,,,,
+trainingVideo_Practice_2_car,0.35,0.1963,0.93,0.6313
+trainingAudio_Practice_3_car,,,,
+trainingVideo_Practice_3_car,0.35,0.1963,0.93,0.6313
+testAudio_Practice_car,,,,
+left_testVideo_Practice_car,0.25,0.1963,0.605,0.6313
+right_testVideo_Practice_car,0.67,0.1963,1.25,0.6313
+testAudio_Practice_car,,,,
+testVideos_Practice_car,0.25,0.1963,1.25,0.6313
+End_Practice_Trial_4 ,,,,
+recenter ,,,,
+Start_noBias_Trial 1,,,,
+ambigAudio_noBias1,,,,
+ambigVideo_noBias1,0.35,0.1963,0.93,0.6313
+ambigAudio_noBias1,,,,
+trainingAudio_noBias_1 1,,,,
+trainingVideo_noBias_1 1,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_1 1,,,,
+trainingAudio_noBias_2 1,,,,
+trainingVideo_noBias_21,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_2 1,,,,
+trainingAudio_noBias_3 1,,,,
+trainingVideo_noBias_3 1,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_3 1,,,,
+testAudio_noBias1,,,,
+left_testVideo_noBias 1,0.25,0.1963,0.605,0.6313
+right_testVideo_noBias 1,0.67,0.1963,1.25,0.6313
+testAudio 1,,,,
+testVideos 1,0.25,0.1963,1.25,0.6313
+End_NoBias_Trial 1,,,,
+recenter 1,,,,
+Start_noBias_Trial 2,,,,
+ambigAudio_noBias2,,,,
+ambigVideo_noBias2,0.35,0.1963,0.93,0.6313
+ambigAudio_noBias2,,,,
+trainingAudio_noBias_1 2,,,,
+trainingVideo_noBias_1 2,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_1 2,,,,
+trainingAudio_noBias_2 2,,,,
+trainingVideo_noBias_22,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_2 2,,,,
+trainingAudio_noBias_3 2,,,,
+trainingVideo_noBias_3 2,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_3 2,,,,
+testAudio_noBias2,,,,
+left_testVideo_noBias 2,0.25,0.1963,0.605,0.6313
+right_testVideo_noBias 2,0.67,0.1963,1.25,0.6313
+testAudio 2,,,,
+testVideos 2,0.25,0.1963,1.25,0.6313
+End_NoBias_Trial 2,,,,
+recenter 2,,,,
+Start_noBias_Trial 3,,,,
+ambigAudio_noBias3,,,,
+ambigVideo_noBias3,0.35,0.1963,0.93,0.6313
+ambigAudio_noBias3,,,,
+trainingAudio_noBias_1 3,,,,
+trainingVideo_noBias_1 3,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_1 3,,,,
+trainingAudio_noBias_2 3,,,,
+trainingVideo_noBias_23,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_2 3,,,,
+trainingAudio_noBias_3 3,,,,
+trainingVideo_noBias_3 3,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_3 3,,,,
+testAudio_noBias3,,,,
+left_testVideo_noBias 3,0.25,0.1963,0.605,0.6313
+right_testVideo_noBias 3,0.67,0.1963,1.25,0.6313
+testAudio 3,,,,
+testVideos 3,0.25,0.1963,1.25,0.6313
+End_NoBias_Trial 3,,,,
+recenter 3,,,,
+Start_noBias_Trial 4,,,,
+ambigAudio_noBias4,,,,
+ambigVideo_noBias4,0.35,0.1963,0.93,0.6313
+ambigAudio_noBias4,,,,
+trainingAudio_noBias_1 4,,,,
+trainingVideo_noBias_1 4,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_1 4,,,,
+trainingAudio_noBias_2 4,,,,
+trainingVideo_noBias_24,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_2 4,,,,
+trainingAudio_noBias_3 4,,,,
+trainingVideo_noBias_3 4,0.35,0.1963,0.93,0.6313
+trainingAudio_noBias_3 4,,,,
+testAudio_noBias4,,,,
+left_testVideo_noBias 4,0.25,0.1963,0.605,0.6313
+right_testVideo_noBias 4,0.67,0.1963,1.25,0.6313
+testVideos_noBias 4,0.25,0.1963,1.25,0.6313
+End_NoBias_Trial 4,,,,
+recenter 4,,,,
+Start_Trial 5,,,,
+ambigAudio_Main5,,,,
+ambigVideo_Main 5,0.35,0.1963,0.93,0.6313
+ambigAudio_Main 5,,,,
+biasAudio_Main5,,,,
+left_biasVideo_Main 5,0.25,0.1963,0.605,0.6313
+right_biasVideo_Main5,0.67,0.1963,1.25,0.6313
+audio_biasTest_Main 5,,,,
+biasTest_Main 5,,,,
+trainingAudio_1_Main 5,,,,
+trainingVideo_1_Main 5,0.35,0.1963,0.93,0.6313
+trainingAudio_1_Main 5,,,,
+trainingAudio_2_Main 5,,,,
+trainingVideo_2_Main 5,0.35,0.1963,0.93,0.6313
+trainingAudio_2_Main 5,,,,
+trainingAudio_3_Main 5,,,,
+trainingVideo_3_Main 5,0.35,0.1963,0.93,0.6313
+trainingAudio_3_Main 5,,,,
+testAudio_Main 5,,,,
+left_testVideo_Main 5,0.25,0.1963,0.605,0.6313
+right_testVideo_Main 5,0.67,0.1963,1.25,0.6313
+testAudio_Main 5,,,,
+testVideos_Main 5,0.25,0.1963,1.25,0.6313
+End_Trial_Main 5,,,,
+recenter 5,,,,
+Start_Trial 6,,,,
+ambigAudio_Main6,,,,
+ambigVideo_Main 6,0.35,0.1963,0.93,0.6313
+ambigAudio_Main 6,,,,
+biasAudio_Main6,,,,
+left_biasVideo_Main 6,0.25,0.1963,0.605,0.6313
+right_biasVideo_Main 6,0.67,0.1963,1.25,0.6313
+audio_biasTest_Main 6,,,,
+biasTest_Main 6,,,,
+trainingAudio_1_Main 6,,,,
+trainingVideo_1_Main 6,0.35,0.1963,0.93,0.6313
+trainingAudio_1_Main 6,,,,
+trainingAudio_2_Main 6,,,,
+trainingVideo_2_Main 6,0.35,0.1963,0.93,0.6313
+trainingAudio_2_Main 6,,,,
+trainingAudio_3_Main 6,,,,
+trainingVideo_3_Main 6,0.35,0.1963,0.93,0.6313
+trainingAudio_3_Main 6,,,,
+testAudio_Main 6,,,,
+left_testVideo_Main 6,0.25,0.1963,0.605,0.6313
+right_testVideo_Main 6,0.67,0.1963,1.25,0.6313
+testAudio_Main 6,,,,
+testVideos_Main 6,0.25,0.1963,1.25,0.6313
+End_Trial_Main 6,,,,
+recenter 6,,,,
+Start_Trial 7,,,,
+ambigAudio_Main7,,,,
+ambigVideo_Main 7,0.35,0.1963,0.93,0.6313
+ambigAudio_Main 7,,,,
+biasAudio_Main7,,,,
+left_biasVideo_Main 7,0.25,0.1963,0.605,0.6313
+right_biasVideo_Main 7,0.67,0.1963,1.25,0.6313
+audio_biasTest_Main 7,,,,
+biasTest_Main 7,,,,
+trainingAudio_1_Main 7,,,,
+trainingVideo_1_Main 7,0.35,0.1963,0.93,0.6313
+trainingAudio_1_Main 7,,,,
+trainingAudio_2_Main 7,,,,
+trainingVideo_2_Main 7,0.35,0.1963,0.93,0.6313
+trainingAudio_2_Main 7,,,,
+trainingAudio_3_Main 7,,,,
+trainingVideo_3_Main 7,0.35,0.1963,0.93,0.6313
+trainingAudio_3_Main 7,,,,
+testAudio_Main 7,,,,
+left_testVideo_Main 7,0.25,0.1963,0.605,0.6313
+right_testVideo_Main 7,0.67,0.1963,1.25,0.6313
+testAudio_Main 7,,,,
+testVideos_Main 7,0.25,0.1963,1.25,0.6313
+End_Trial_Main 7,,,,
+recenter 7,,,,
+Start_Trial 8,,,,
+ambigAudio_Main8,,,,
+ambigVideo_Main 8,0.35,0.1963,0.93,0.6313
+ambigAudio_Main 8,,,,
+biasAudio_Main8,,,,
+left_biasVideo_Main 8,0.25,0.1963,0.605,0.6313
+right_biasVideo_Main 8,0.67,0.1963,1.25,0.6313
+audio_biasTest_Main 8,,,,
+biasTest_Main 8,,,,
+trainingAudio_1_Main 8,,,,
+trainingVideo_1_Main 8,0.35,0.1963,0.93,0.6313
+trainingAudio_1_Main 8,,,,
+trainingAudio_2_Main 8,,,,
+trainingVideo_2_Main 8,0.35,0.1963,0.93,0.6313
+trainingAudio_2_Main 8,,,,
+trainingAudio_3_Main 8,,,,
+trainingVideo_3_Main 8,0.35,0.1963,0.93,0.6313
+trainingAudio_3_Main 8,,,,
+testAudio_Main 8,,,,
+left_testVideo_Main 8,0.25,0.1963,0.605,0.6313
+right_testVideo_Main 8,0.67,0.1963,1.25,0.6313
+testAudio_Main 8,,,,
+testVideos_Main 8,0.25,0.1963,1.25,0.6313
+End_Trial_Main 8,,,,
+recenter 8,,,,
+Start_Extend_Trial 1,,,,
+ambigAudio_Extend 1,,,,
+ambigVideo_Extend 1,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 1,,,,
+biasAudio_Extend 1,,,,
+left_biasVideo_Extend 1,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 1,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 1,,,,
+biasTest_Extend 1,,,,
+End_Extend_Trial 1,,,,
+recenter 1,,,,
+Start_Extend_Trial 2,,,,
+ambigAudio_Extend 2,,,,
+ambigVideo_Extend 2,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 2,,,,
+biasAudio_Extend 2,,,,
+left_biasVideo_Extend 2,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 2,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 2,,,,
+biasTest_Extend 2,0.25,0.1963,1.25,0.6313
+End_Extend_Trial 2,,,,
+recenter 2,,,,
+Start_Extend_Trial 3,,,,
+ambigAudio_Extend 3,,,,
+ambigVideo_Extend 3,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 3,,,,
+biasAudio_Extend 3,,,,
+left_biasVideo_Extend 3,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 3,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 3,,,,
+biasTest_Extend 3,0.25,0.1963,1.25,0.6313
+End_Extend_Trial 3,,,,
+recenter 3,,,,
+Start_Extend_Trial 4,,,,
+ambigAudio_Extend 4,,,,
+ambigVideo_Extend 4,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 4,,,,
+biasAudio_Extend 4,,,,
+left_biasVideo_Extend 4,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 4,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 4,,,,
+biasTest_Extend 4,0.25,0.1963,1.25,0.6313
+End_Extend_Trial 4,,,,
+recenter 4,,,,
+Start_Extend_Trial 5,,,,
+ambigAudio_Extend 5,,,,
+ambigVideo_Extend 5,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 5,,,,
+biasAudio_Extend 5,,,,
+left_biasVideo_Extend 5,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 5,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 5,,,,
+biasTest_Extend 5,0.25,0.1963,1.25,0.6313
+End_Extend_Trial 5,,,,
+recenter 5,,,,
+Start_Extend_Trial 6,,,,
+ambigAudio_Extend 6,,,,
+ambigVideo_Extend 6,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 6,,,,
+biasAudio_Extend 6,,,,
+left_biasVideo_Extend 6,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 6,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 6,,,,
+biasTest_Extend 6,0.25,0.1963,1.25,0.6313
+End_Extend_Trial 6,,,,
+recenter 6,,,,
+Start_Extend_Trial 7,,,,
+ambigAudio_Extend 7,,,,
+ambigVideo_Extend 7,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 7,,,,
+biasAudio_Extend 7,,,,
+left_biasVideo_Extend 7,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 7,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 7,,,,
+biasTest_Extend 7,0.25,0.1963,1.25,0.6313
+End_Extend_Trial 7,,,,
+recenter 7,,,,
+Start_Extend_Trial 8,,,,
+ambigAudio_Extend 8,,,,
+ambigVideo_Extend 8,0.35,0.1963,0.93,0.6313
+ambigAudio_Extend 8,,,,
+biasAudio_Extend 8,,,,
+left_biasVideo_Extend 8,0.25,0.1963,0.605,0.6313
+right_biasVideo_Extend 8,0.67,0.1963,1.25,0.6313
+biasAudio_Extend 8,,,,
+biasTest_Extend 8,0.25,0.1963,1.25,0.6313
+End_Extend_Trial 8,,,,
+recenter 8,,,,

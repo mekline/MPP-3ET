@@ -1,0 +1,5 @@
+List,VideoGroup,VerbDomain,itemID,eventType,Condition,ambigV,trainV1,trainV2,trainV3,mTestV,pTestV,audio1,audio2
+1,Practice,Noun,1.1,Noun,Noun,practice_1a.mp4,practice_1b.mp4,practice_1c.mp4,practice_1d.mp4,practice_1e.mp4,practice_1_distr.mp4,ball1.wav,ball2.wav
+1,Practice,Noun,1.2,Noun,Noun,practice_2a.mp4,practice_2b.mp4,practice_2c.mp4,practice_2d.mp4,practice_2e.mp4,practice_2_distr.mp4,book1.wav,book2.wav
+1,Practice,Noun,1.3,Noun,Noun,practice_3a.mp4,practice_3b.mp4,practice_3c.mp4,practice_3d.mp4,practice_3e.mp4,practice_3_distr.mp4,car1.wav,car2.wav
+1,Practice,Noun,1.4,Noun,Noun,practice_4a.mp4,practice_4b.mp4,practice_4c.mp4,practice_4d.mp4,practice_4e.mp4,practice_4_distr.mp4,cake1.wav,cake2.wav
