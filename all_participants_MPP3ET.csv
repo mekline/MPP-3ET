@@ -9,7 +9,7 @@ SubjectNo,SubjectID,Experiment,ParticipantGroup,DAT_Directory,VerbCond,TrainingS
 4,2018-06-22_debug1,Pilot,Adult,./2018-06-22_debug1,Manner,None,None,NA,F,7464,20,5,WJH,Olivia ,went through successfully,,,,
 5,2018-06-25_OliviaNotLooking1,Pilot,Adult,./2018-06-25_OliviaNotLooking1,Path,None,2018-06-25_OliviaNotLooking1,NA,F,7471,20,5,WJH,Olivia,Went through successfully,,,,
 6,2018-06-25_AdultPilot3,Pilot,Adult,./2018-06-25_AdultPilot3,Manner,None,2018-06-25_AdultPilot3,NA,F,7727,21,1,WJH,Olivia,Went through successfully,,,,
-,,,,,,,,,,,,,,,,,,,
+7,2018-07-02_OliviaLosingAttention,Pilot,Adult,./2018-07-02_OliviaLosingAttention,Path,None,2018-07-02_OliviaLosingAttention,NA,F,7478,20,5,WJH,Olivia,NA,,,,
 ,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,
