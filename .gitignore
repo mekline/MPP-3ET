@@ -26,3 +26,4 @@ Data/test7/MPPCREATION_test7.dat
 Data/test7/timestamps_MPPCREATION_test7.csv
 Data/timestamps_MPPCREATION_test8.csv
 **/*.RData
+.DS_Store
