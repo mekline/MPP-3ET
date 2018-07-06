@@ -3,18 +3,19 @@
 # (Practice, Main, Extend), and then append them all to a dataframe. We're going
 # to loop through each participant. 
 
-install.packages("devtools")
-devtools::install_github("jwdink/eyetrackingR")
+#install.packages("devtools")
+#devtools::install_github("jwdink/eyetrackingR")
+#install.packages('sqldf')
 library("eyetrackingR")
 library("plyr")
 library("dplyr")
 library("lme4")
 library("ggplot2")
 library("Matrix")
-install.packages("stringr")
+#install.packages("stringr")
 library("stringr")
 
-setwd('/Users/crystallee/Documents/Github/MannerPathPriming-2ET/Data')
+setwd('~/Desktop/MannerPathPriming-3ET')
 
 
 ############################
@@ -23,7 +24,7 @@ setwd('/Users/crystallee/Documents/Github/MannerPathPriming-2ET/Data')
 
 
 # Reading in subject list
-subjects <- read.csv("MPP2ET_Pilot_Data.csv")
+subjects <- read.csv("all_participants_MPP3ET.csv")
 
 # Declaring an empty df to append to
 allData <- data.frame(Date=as.Date(character()),
