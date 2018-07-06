@@ -54,14 +54,14 @@ se <- function(mylist){
 #=========================#
 
 
-kids_to_process <- c('2018-07-05_ChildPilot1x2',
+kids_to_process <- c('2018-07-05_ChildPilot1_x2',
                      '2018-07-05_ChildPilot2',
                      '2018-07-05_ChildPilot3')
 #Set your directories
 
-myRepo = '~/Desktop/MannerPathPriming-3ET/Data'
-analysisDir = paste(myRepo, '/Analysis/Analysis_Pilot3/',sep='')
-dataDir = paste(myRepo, '/Data/Pilot 3/',sep='')
+myRepo = '~/Desktop/MannerPathPriming-3ET'
+analysisDir = paste(myRepo, '/Analysis',sep='')
+dataDir = paste(myRepo, '/Data',sep='')
 
 ########
 context('Check that directory was set correctly and participant file loads!')
@@ -94,7 +94,7 @@ GazeData <- data.frame(NULL)
 kids_to_process <- str_to_lower(kids_to_process)
 
 for(ID in pData$subjectID){
-  myDataDir <- paste(dataDir,ID,'/',sep='')
+  myDataDir <- paste(dataDir,ID, sep='/')
   setwd(myDataDir)
   print(ID)
   
