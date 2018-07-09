@@ -179,7 +179,7 @@ try
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
     for i=1:1 %SHORTER VERSION, PILOT 3/19 
     %for i=1:2
-         Trial_Practice(i);
+         %Trial_Practice(i);
          display(i)
      end
   
@@ -190,20 +190,20 @@ try
     %How many trials?
     ntrials = height(MAIN_ITEMS); 
     
-    for i=1:ntrials/4; %SHORTER PILOT 3/19
-        disp(i)
-        Trial_Omnibus(i, 'NoBias');
-        expTrial = GetSecs;
-        expTime = expTrial - expStart;       %What does the expTime global do?
-        Write_MPP_Trial(i, MAIN_ITEMS);
-    end
+%     for i=1:ntrials/4; %SHORTER PILOT 3/19
+%         disp(i)
+%         %Trial_Omnibus(i, 'NoBias');
+%         %expTrial = GetSecs;
+%         %expTime = expTrial - expStart;       %What does the expTime global do?
+%         %Write_MPP_Trial(i, MAIN_ITEMS);
+%     end
 
 
 %     All WithBias trials! (6/9)
     for i=1:ntrials
         disp(i)
         disp(MAIN_ITEMS.verbName(i))
-        Trial_Omnibus(i,'WithBias');
+        %Trial_Omnibus(i,'WithBias');
         expTrial = GetSecs;
         expTime = expTrial - expStart;       
         Write_MPP_Trial(i, MAIN_ITEMS);

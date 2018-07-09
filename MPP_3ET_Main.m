@@ -1,5 +1,5 @@
 
-function MPP_3ET_Main(SubjectID, Condition, ToExtend, Set, varargin)
+function MPP_3ET_Main(SubjectID, Condition, ToExtend, varargin)
 % The new MPP, for eyetracking 2yos. The new excitement is that
 % this version has refactored the common resources for PTB,
 % eyetracking, and common stimuli for easier/more economical
@@ -14,7 +14,6 @@ p = inputParser;
 p.addRequired('SubjectID');
 p.addRequired('Condition');
 p.addRequired('ToExtend');
-p.addRequired('Set');
 p.addParamValue('use_eyetracker', 1, @isnumeric); %use 0 for no eyetracker
 p.addParamValue('experiment_name', 'MPP3ET', @isstr);
 p.addParamValue('eyetracker_name', 'Lion', @isstr); %in case you have multiple eyetrackers in the lab...
@@ -22,7 +21,7 @@ p.addParamValue('calib_version', 'Kid', @isstr); %can replace with 'Kid' for a c
 p.addParamValue('max_calib', 5, @isnumeric); %in case we want to NOT loop on the calibration forever.
 p.addParamValue('ExtendPractice', 1, @isnumeric);
 
-p.parse(SubjectID, Condition, ToExtend, Set, varargin{:});
+p.parse(SubjectID, Condition, ToExtend, varargin{:});
 inputs = p.Results;
 
 %*** Set the global variables
@@ -44,7 +43,7 @@ global KEYID %Keyboard stuff
 global CONDITION %Manner, Path, Action, or Effect
 global TOEXTEND %Extend or NoExtend
 global EXTENDPRACTICE %ExtendPractice or NoPractice %MK's not sure what this is for!
-global SET % 1 or 2, which set of four verbs will start
+%global SET % 1 or 2, which set of four verbs will start
 
 if ~ischar(inputs.SubjectID)
     SUBJECT = num2str(inputs.SubjectID);
@@ -67,7 +66,7 @@ MAXCALIB = inputs.max_calib;
 USE_EYETRACKER = inputs.use_eyetracker;
 CONDITION = inputs.Condition;
 TOEXTEND = inputs.ToExtend;
-SET = inputs.Set;
+%SET = inputs.Set;
 EXTENDPRACTICE = inputs.ExtendPractice;
 
 % Validate inputs
@@ -81,10 +80,10 @@ knownCond = strfind(ExtConditions, TOEXTEND);
 k = logical(sum(~cellfun(@isempty, knownCond)));
 assert(k, 'Use NoExtend or Extend for the extension (NoExtend is default)');
 
-Sets = {'Set1', 'Set2'};
-knownCond = strfind(Sets, SET);
-k = logical(sum(~cellfun(@isempty, knownCond)));
-assert(k, 'Use Set1 or Set2 for main exp');
+% Sets = {'Set1', 'Set2'};
+% knownCond = strfind(Sets, SET);
+% k = logical(sum(~cellfun(@isempty, knownCond)));
+% assert(k, 'Use Set1 or Set2 for main exp');
 
 DATAFILE = AssignDataFile(); %will kick you out if the subjname has been used
 

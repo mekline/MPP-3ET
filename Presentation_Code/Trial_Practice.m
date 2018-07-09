@@ -153,7 +153,7 @@ end
 
 %Interesting noises & pix for non-boringness
 Play_Sound(bells,0);
-Show_Image([RESOURCEFOLDER '/rewardpix/cuteanimals.0' num2str(trialNo + 16) '.jpeg']);
+Show_Image([RESOURCEFOLDER '/stars/longstars.' num2str(trialNo + 1, '%03.0f') '.jpeg']);
 %Save gaze trial data as MAT, and add to the big CSV
 description = ['All_of_Practice_trial_' num2str(trialNo)]; %description of this timeperiod
 
