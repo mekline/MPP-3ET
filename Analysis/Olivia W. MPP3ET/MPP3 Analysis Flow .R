@@ -60,7 +60,7 @@ kids_to_process <- c('2018-07-05_ChildPilot1_x2',
 #Set your directories
 
 myRepo = '~/Desktop/MannerPathPriming-3ET'
-analysisDir = paste(myRepo, '/Analysis',sep='')
+analysisDir = paste(myRepo, '/Analysis/Olivia W. MPP3ET',sep='')
 dataDir = paste(myRepo, '/Data',sep='')
 
 ########
@@ -98,8 +98,8 @@ for(ID in pData$subjectID){
   setwd(myDataDir)
   print(ID)
   
-  myDatFile <- paste('data_MPPCREATION_',ID, '.dat', sep='')
-  myTimestampFile <- paste('timestamps_MPPCREATION_',ID,'.csv',sep='')
+  myDatFile <- paste('data_MPP3ET_',ID, '.dat', sep='')
+  myTimestampFile <- paste('timestamps_MPP3ET_',ID,'.csv',sep='')
   myMainGazeFiles <- list.files(path = myDataDir, full.names = TRUE, pattern = ".*\\Main_.*.csv")
   myPracticeGazeFiles <- list.files(path = myDataDir, full.names = TRUE, pattern = ".*\\Practice_.*.csv")
   
@@ -190,7 +190,13 @@ pract2 <- DatData %>%
          verbMeaning = 'ball', mannerSideBias = 'NA', pathSideBias = 'NA',
          mannerSideTest = 'NA', pathSideTest = 'NA', targetSideBias = 'NA', targetSideTest = 'L')
 
-DatData <- bind_rows(DatData, pract1)  
+DatData$pathSideTest<-as.numeric(as.character(DatData$pathSideTest))
+pract1$pathSideTest<-as.numeric(as.character(pract1$pathSideTest))
+pract2$pathSideTest<-as.numeric(as.character(pract2$pathSideTest))
+#pathSideTest for pract1 and 2 are NA as a result, they are converted first to as.character so that they are not ranked from big to small, and then to numerics
+#To resolve error message: Error in bind_rows_(x,.id): Column 'pathSideTest'can't be converted from numeric to character
+#comments by Olivia
+DatData <- bind_rows(DatData, pract1) 
 DatData <- bind_rows(DatData, pract2)  
 
 #Make sure all dfs stayed the right length
@@ -301,10 +307,22 @@ TimestampedGazeData <- TimestampedGazeData%>%
          "segment_length_in_sec","description" )
 
 #And merge on the Trial level data!
-
+AllData <- NULL
 AllData <- merge(TimestampedGazeData, AllSubjData, by=c("subjectID", "ExperimentPhase", "trialNo"), all.x=TRUE, all.y=TRUE)
 
+#Check number of unique subjects & trialNos
+ts_length <- TimestampedGazeData %>%
+  group_by(subjectID, ExperimentPhase, trialNo) %>%
+  dplyr::summarize(numlines = n())
+
+as_length <- AllSubjData %>%
+  group_by(subjectID, ExperimentPhase, trialNo) %>%
+  dplyr::summarize(numlines = n())
+
 #Make sure all dfs stayed the right length
+table(GazeData$subjectID)
+table(AllData$subjectID)
+
 expect_equal(gr, nrow(AllData))
 expect_equal(length(unique(AllData$subjectID)), length(kids_to_process))
 
