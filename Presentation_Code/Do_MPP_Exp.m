@@ -189,15 +189,6 @@ try
     
     %How many trials?
     ntrials = height(MAIN_ITEMS); 
-    
-    for i=1:ntrials/4; %SHORTER PILOT 3/19
-        disp(i)
-        Trial_Omnibus(i, 'NoBias');
-        expTrial = GetSecs;
-        expTime = expTrial - expStart;       %What does the expTime global do?
-        Write_MPP_Trial(i, MAIN_ITEMS);
-    end
-
 
 %     All WithBias trials! (6/9)
     for i=1:ntrials
