@@ -56,7 +56,13 @@ se <- function(mylist){
 
 kids_to_process <- c('2018-07-05_ChildPilot1_x2',
                      '2018-07-05_ChildPilot2',
-                     '2018-07-05_ChildPilot3')
+                     '2018-07-05_ChildPilot3',
+                     '2018-07-06_ChildPilot4',
+                     '2018-07-09_ChildPilot5',
+                     '2018-07-09_ChildPilot6',
+                     '2018-07-10_ChildPilot7x4',
+                     '2018-07-10_ChildPilot8',
+                     '2018-07-11_ChildPilot9')
 #Set your directories
 
 myRepo = '~/Desktop/MannerPathPriming-3ET'
