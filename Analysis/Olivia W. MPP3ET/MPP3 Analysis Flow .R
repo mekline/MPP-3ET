@@ -282,6 +282,7 @@ expect_equal(sum(tr, gr, dr, ar),
 #####
 #####
 TimestampData <- TimestampData %>%
+  filter(trialNo != 'Experiment') %>% #Drop the dummy line that's at the start of all files, its no longer needed since timestamps were normalized, and it breaks things. 
   mutate(trialNo = ifelse(phaseTimestamp == 'Main', as.numeric(trialNo), as.numeric(trialNo)-100))
 
 GazeData <- GazeData %>%
@@ -327,7 +328,7 @@ as_length <- AllSubjData %>%
 table(GazeData$subjectID)
 table(AllData$subjectID)
 
-expect_equal(gr, nrow(AllData))
+expect_equal(gr, nrow(AllData)) #This test repeatedly fails! We're not quite sure why
 expect_equal(length(unique(AllData$subjectID)), length(kids_to_process))
 
 #Similarly, all trials should be present
