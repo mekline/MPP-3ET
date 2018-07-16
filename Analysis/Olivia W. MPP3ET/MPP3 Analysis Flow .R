@@ -54,15 +54,18 @@ se <- function(mylist){
 #=========================#
 
 
-kids_to_process <- c('2018-07-05_ChildPilot1_x2',
+kids_to_process <- c('2018-07-09_ChildPilot5',
+                     '2018-07-05_ChildPilot1_x2',
                      '2018-07-05_ChildPilot2',
                      '2018-07-05_ChildPilot3',
                      '2018-07-06_ChildPilot4',
-                     '2018-07-09_ChildPilot5',
                      '2018-07-09_ChildPilot6',
                      '2018-07-10_ChildPilot7x4',
                      '2018-07-10_ChildPilot8',
-                     '2018-07-11_ChildPilot9')
+                     '2018-07-11_ChildPilot9',
+                     '2018-07-12_ChildPilot10',
+                     '2018-07-12_ChildPilot11x2')
+                    
 #Set your directories
 
 myRepo = '~/Desktop/MannerPathPriming-3ET'
@@ -361,6 +364,7 @@ AllData <- AllData %>%
   dplyr::mutate(end_time_by_probe = max(adjusted_end_time))%>%
   ungroup()
   
+#Olivia: commenting the following section out as 'aoi_t60_LionRoom.csv' does not exist in MPP3ET
 #Add AOIs
 # LEFT- liberal
 # LEFT moviebox
@@ -370,11 +374,11 @@ AllData <- AllData %>%
 #NOTE these AOIS are in relative numbers (0,0 to 1,1), and are accurate
 #for display on our 1280x1040 T60; but maybe not on yours (the PTB help
 #code has some pixel-based calculations!)
-aois = read.csv('aoi_t60_LionRoom.csv', stringsAsFactors = FALSE)
-for (i in 1:nrow(aois)) {
-  AllData = add_aoi(data=AllData, aoi_dataframe = aois[i,], 
-                x_col= "Gaze_x", y_col= "Gaze_y", 
-                aoi_name = aois[i,]$AOIName)}
+#aois = read.csv('aoi_t60_LionRoom.csv', stringsAsFactors = FALSE)
+#for (i in 1:nrow(aois)) {
+  #AllData = add_aoi(data=AllData, aoi_dataframe = aois[i,], 
+                #x_col= "Gaze_x", y_col= "Gaze_y", 
+                #aoi_name = aois[i,]$AOIName)}
 
 #Add Derived AOIS (using the known target side!)
 AllData <- AllData %>%
@@ -385,6 +389,7 @@ AllData <- AllData %>%
   mutate(In_NonTarget_Side = ifelse(targetSide == 'R', Left_Side, Right_Side)) %>%
   mutate(In_Manner_Box = ifelse(Condition == "Manner", In_Target_Box, In_NonTarget_Box)) %>%
   mutate(In_Manner_Side = ifelse(Condition == "Manner", In_Target_Side, In_NonTarget_Side))
+#Olivia: object 'Left_Box' not found?
 
 #For dropping misbehaving timepoints (see below)
 
