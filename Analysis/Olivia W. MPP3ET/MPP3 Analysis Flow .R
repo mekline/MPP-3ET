@@ -60,15 +60,16 @@ kids_to_process <- c('2018-07-09_ChildPilot5',
                      '2018-07-05_ChildPilot3',
                      '2018-07-06_ChildPilot4',
                      '2018-07-09_ChildPilot6',
-                     '2018-07-10_ChildPilot7x4',
-                     '2018-07-10_ChildPilot8',
+                     #'2018-07-10_ChildPilot7x4', #Comment out, causes probs from duplicated trials
+                     #'2018-07-10_ChildPilot8', #Comment out, causes probs from duplicated trials
                      '2018-07-11_ChildPilot9',
                      '2018-07-12_ChildPilot10',
                      '2018-07-12_ChildPilot11x2')
                     
 #Set your directories
 
-myRepo = '~/Desktop/MannerPathPriming-3ET'
+myRepo = '~/Dropbox/_Projects/MannerPath-2ET/MannerPathPriming-3ET'
+#myRepo = '~/Desktop/MannerPathPriming-3ET'
 analysisDir = paste(myRepo, '/Analysis/Olivia W. MPP3ET',sep='')
 dataDir = paste(myRepo, '/Data',sep='')
 
@@ -185,12 +186,12 @@ DatData <- DatData %>%
 #Manually add Pratice lines to the Dat files - parameters always the same! Target on the right for trial 1, target on left for trial 2
 #NOTE: This may add a trial the child didn't actually do (ie if second practice trial
 #wasn't run, the new version), but this will be fine bc it won't correspond to any timestamps
-pract1 <- DatData %>%
-  group_by(subjectID)%>%
-  summarise_all(first)%>%
-  mutate(trialNo = 1, itemID = 'practice1', verbName = 'NA', ExperimentPhase = 'Practice',
-         verbMeaning = 'book', mannerSideBias = 'NA', pathSideBias = 'NA',
-         mannerSideTest = 'NA', pathSideTest = 'NA', targetSideBias = 'NA', targetSideTest = 'R')
+# pract1 <- DatData %>%
+#   group_by(subjectID)%>%
+#   summarise_all(first)%>%
+#   mutate(trialNo = 1, itemID = 'practice1', verbName = 'NA', ExperimentPhase = 'Practice',
+#          verbMeaning = 'book', mannerSideBias = 'NA', pathSideBias = 'NA',
+#          mannerSideTest = 'NA', pathSideTest = 'NA', targetSideBias = 'NA', targetSideTest = 'R')
 
 pract2 <- DatData %>%
   group_by(subjectID)%>%
@@ -199,17 +200,11 @@ pract2 <- DatData %>%
          verbMeaning = 'ball', mannerSideBias = 'NA', pathSideBias = 'NA',
          mannerSideTest = 'NA', pathSideTest = 'NA', targetSideBias = 'NA', targetSideTest = 'L')
 
-DatData$pathSideTest<-as.numeric(as.character(DatData$pathSideTest))
-pract1$pathSideTest<-as.numeric(as.character(pract1$pathSideTest))
-pract2$pathSideTest<-as.numeric(as.character(pract2$pathSideTest))
-#pathSideTest for pract1 and 2 are NA as a result, they are converted first to as.character so that they are not ranked from big to small, and then to numerics
-#To resolve error message: Error in bind_rows_(x,.id): Column 'pathSideTest'can't be converted from numeric to character
-#comments by Olivia
-DatData <- bind_rows(DatData, pract1) 
+#DatData <- bind_rows(DatData, pract1) 
 DatData <- bind_rows(DatData, pract2)  
 
 #Make sure all dfs stayed the right length
-expect_equal(sum(tr, gr, dr) + 2*length(kids_to_process), 
+expect_equal(sum(tr, gr, dr) + length(kids_to_process), 
              sum(nrow(DatData), nrow(GazeData), nrow(TimestampData))) 
 
 #Update correct DatData length
