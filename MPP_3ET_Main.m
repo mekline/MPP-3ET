@@ -1,4 +1,3 @@
-      2018
 function MPP_3ET_Main(SubjectID, Condition, ToExtend, varargin)
 % The new MPP, for eyetracking 2yos. The new excitement is that
 % this version has refactored the common resources for PTB,
@@ -158,3 +157,5 @@ Do_MPP_Exp();
 %---After the experiment finishes, clean up and exit nicely
 Screen('CloseAll');
 Closeout_PTool;
+
+end
