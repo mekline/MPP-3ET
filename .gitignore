@@ -29,3 +29,4 @@ Data/timestamps_MPPCREATION_test8.csv
 **/*.Rhistory
 .DS_Store
 **/*.DS_Store
+**/*.Rapp.history

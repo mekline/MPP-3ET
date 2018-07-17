@@ -196,7 +196,7 @@ DatData <- DatData %>%
 pract2 <- DatData %>%
   group_by(subjectID)%>%
   summarise_all(first)%>%
-  mutate(trialNo = 2, itemID = 'practice2', verbName = 'NA', ExperimentPhase = 'Practice',
+  mutate(trialNo = 1, itemID = 'practice1', verbName = 'NA', ExperimentPhase = 'Practice',
          verbMeaning = 'ball', mannerSideBias = 'NA', pathSideBias = 'NA',
          mannerSideTest = 'NA', pathSideTest = 'NA', targetSideBias = 'NA', targetSideTest = 'L')
 
@@ -328,7 +328,7 @@ as_length <- AllSubjData %>%
 table(GazeData$subjectID)
 table(AllData$subjectID)
 
-expect_equal(gr, nrow(AllData)) #This test repeatedly fails! We're not quite sure why
+expect_equal(gr, nrow(AllData))
 expect_equal(length(unique(AllData$subjectID)), length(kids_to_process))
 
 #Similarly, all trials should be present
@@ -348,6 +348,8 @@ AllData <- AllData %>%
   separate(description, c('probeType','probeSegment'), extra = "merge")
 
 #TEST all timebins (at least in the Main exp) should be the right length for their segment. Check for problems here
+#What to look for: Are the averaged compareVideo_still lengths close to 3.0 seconds? Are the averaged left_video and right_video segments close to 5.8?
+#IF not, something has gone wrong. 
 segments <- AllData %>%
   group_by(probeSegment, ExperimentPhase)%>%
   dplyr::summarize(meanlen = mean(segment_length_in_sec, na.rm=TRUE), selen = se(segment_length_in_sec))
@@ -360,7 +362,6 @@ AllData <- AllData %>%
   dplyr::mutate(end_time_by_probe = max(adjusted_end_time))%>%
   ungroup()
   
-#Olivia: commenting the following section out as 'aoi_t60_LionRoom.csv' does not exist in MPP3ET
 #Add AOIs
 # LEFT- liberal
 # LEFT moviebox
@@ -370,11 +371,11 @@ AllData <- AllData %>%
 #NOTE these AOIS are in relative numbers (0,0 to 1,1), and are accurate
 #for display on our 1280x1040 T60; but maybe not on yours (the PTB help
 #code has some pixel-based calculations!)
-#aois = read.csv('aoi_t60_LionRoom.csv', stringsAsFactors = FALSE)
-#for (i in 1:nrow(aois)) {
-  #AllData = add_aoi(data=AllData, aoi_dataframe = aois[i,], 
-                #x_col= "Gaze_x", y_col= "Gaze_y", 
-                #aoi_name = aois[i,]$AOIName)}
+aois = read.csv('aoi_t60_LionRoom.csv', stringsAsFactors = FALSE)
+for (i in 1:nrow(aois)) {
+  AllData = add_aoi(data=AllData, aoi_dataframe = aois[i,], 
+                x_col= "Gaze_x", y_col= "Gaze_y", 
+                aoi_name = aois[i,]$AOIName)}
 
 #Add Derived AOIS (using the known target side!)
 AllData <- AllData %>%
@@ -385,12 +386,10 @@ AllData <- AllData %>%
   mutate(In_NonTarget_Side = ifelse(targetSide == 'R', Left_Side, Right_Side)) %>%
   mutate(In_Manner_Box = ifelse(Condition == "Manner", In_Target_Box, In_NonTarget_Box)) %>%
   mutate(In_Manner_Side = ifelse(Condition == "Manner", In_Target_Side, In_NonTarget_Side))
-#Olivia: object 'Left_Box' not found?
 
-#For dropping misbehaving timepoints (see below)
-
-AllData <- AllData %>%
-  filter(!(subjectID =='child_pilot_03282018_10_3am'& trialNo ==6 & adjusted_time ==493068505))
+#For dropping any misbehaving timepoints (see below)
+#AllData <- AllData %>%
+#  filter(!(subjectID =='child_pilot_03282018_10_3am'& trialNo ==6 & adjusted_time ==493068505))
 
 ERData <- make_eyetrackingr_data(AllData, 
                                participant_column = "subjectID",
@@ -406,10 +405,10 @@ ERData <- make_eyetrackingr_data(AllData,
 
 ####
 ####
-#NOTE: A waring that 'your dataset has a column called Time' may occur (I used this for hour of testing on days
-#where we had multiple kids'); This is fine, as described in the message that column will be renamed/saved
+#NOTE: A waring that "your dataset has a column called Time" may occur. This is fine (I used this for hour of testing on days
+#where we had multiple kids). As described in the message you get above, that column will be renamed/saved
 #NOTE: If you get an error about 'trial_column not unique within participants' and a table, this
-#may indicate that two timestamps are registering as being at the same time (I had exactly 1 such measurement
+#may indicate that two timestamps get recorded as being at the same time (I had exactly 1 such measurement
 #in the pilot set.  Best bet for now is to manually exclude that timepoint.  See above for syntax!)
 ####
 
@@ -434,14 +433,13 @@ View(TL_Descriptives)
 #########################
 
 #########################
-# SUBSETTING DATA
+# SUBSETTING DATA - SELECTING SEGMENTS TO ANALYZE AND TRIALS TO INCLUDE
 #########################
 
 ERData_zeroed = subset_by_window(ERData, window_start_col = "start_time_by_probe", window_end_col = "end_time_by_probe", rezero = TRUE)
 
 Probe_Data = filter(ERData_zeroed, probeType == 'SameVerbTest' | probeType == 'Bias')
-Probe_Data <- clean_by_trackloss(data = Probe_Data, trial_prop_thresh = .25)
-
+Probe_Data <- clean_by_trackloss(data = Probe_Data, trial_prop_thresh = .33)
 
 #########################
 # IN THE FUTURE, All post-data-cleaning subject descriptives should be calculated here so they can be reported!
@@ -456,6 +454,51 @@ final_summary <- describe_data(Probe_Data, 'Left_Box', c('subjectID','Condition'
 mean(final_summary$NumTrials)
 sd(final_summary$NumTrials)
 
+#########################
+#TRIAL LENGTH EXPLORATION
+#########################
+
+#The graph below tends to make it look like manner trials last longer than path trials???
+#Explore here to figure out whats going on
+
+ProbeSummary <- make_time_sequence_data(Probe_Data, time_bin_size = 100000, 
+                                        predictor_columns = c("Condition"),
+                                        aois = c("Left_Side", "Right_Side"),
+                                        summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
+
+#Determined that 'still' and left/right videos are well behaved, just ened to look at 'start' (actual videos playing)
+#Things it isnt:
+  #- just the SameVerb segments, which could be from 'drift' in length of the training chunk
+  #- due to trackloss: even if we limit to very strict trials, the difference is reliably present. 
+  #- due to manner/path being presented on the right vs left: Manner still longer. 
+  #- New in 3ET - same the case in 2ET when I pasted the code ove there :( :( :(
+SumSum <- ProbeSummary %>%
+  filter(probeType == 'Bias')%>%
+  group_by(subjectID, probeSegment, Condition, trialNo, mannerSideBias)%>%
+  dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
+  ungroup() %>%
+  mutate(lengthSegSec = lengthSeg/1000000) %>%
+  filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
+  filter(lengthSegSec > 4.5)
+
+SumSumSV <- ProbeSummary %>%
+  filter(probeType == 'SameVerbTest')%>%
+  group_by(subjectID, probeSegment, Condition, trialNo, mannerSideTest)%>%
+  dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
+  ungroup() %>%
+  mutate(lengthSegSec = lengthSeg/1000000) %>%
+  filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
+  filter(lengthSegSec > 4.5)
+
+
+ggplot(data = SumSumSV, aes(x=lengthSegSec, fill=Condition)) +
+  geom_histogram(binwidth = 0.1) +
+  facet_wrap(~Condition*mannerSideTest, nrow=2)
+#facet_wrap(~probeSegment)
+
+#UPSHOT: They do have a weird shift, this is a problem!! For now, I think what it means is that we
+#shouldn't trust or make decisions about the specific times things happen (or pick subsets) but I
+# think we CAN interpret the times. 
 
 #########################
 # GRAPHS (It's very exciting!)
@@ -513,7 +556,61 @@ MakeSpaghetti <- function(eyedata, pt, ep){
 
 #Run this function, then print to the console to see the graph!
 foo = MakeSpaghetti(Probe_Data, 'SameVerbTest','Main')
-foo = MakeSpaghetti(Probe_Data, 'Bias','Main')
+foo
+
+
+
+#And one for a bar graph!
+
+MakeBar <- function(eyedata, pt, ep){
+  these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
+                           probeSegment %in% c('left_video','right_video'))
+  these_comp1 <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
+                        probeSegment %in% c('compareVideo1_start','compareVideo1_still'))
+  these_comp2 <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
+                        probeSegment %in% c('compareVideo2_start','compareVideo2_still'))
+  
+  LR_seq <- make_time_sequence_data(these_LR_looks, time_bin_size = 4000000, 
+                                    predictor_columns = c("Condition"),
+                                    aois = "Left_Side",
+                                    summarize_by = "subjectID")
+  comp1_seq <- make_time_sequence_data(these_comp1, time_bin_size = 4000000, 
+                                       predictor_columns = c("Condition"),
+                                       aois = c("In_Manner_Side"),
+                                       summarize_by = "subjectID")
+  comp2_seq <- make_time_sequence_data(these_comp2, time_bin_size = 4000000, 
+                                       predictor_columns = c("Condition"),
+                                       aois = c("In_Manner_Side"),
+                                       summarize_by = "subjectID")
+  
+  this_seqdata = bind_rows("LR" = LR_seq, 
+                           "Comp1" = comp1_seq,
+                           "Comp2" = comp2_seq,.id='ResponseWindow')
+  
+  this_seqdata <- this_seqdata %>%
+    mutate(ResponseWindow = factor(ResponseWindow))%>%
+    mutate(ResponseWindow = factor(ResponseWindow, levels(ResponseWindow)[c(3,1,2)])) %>%
+    mutate(Time_in_Sec = Time/1000000) %>%
+    filter(!is.na(Prop))%>%
+    group_by(Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    dplyr::summarize(themean = mean(Prop, na.rm=TRUE), ci_down = bootdown(Prop), ci_up = bootup(Prop))
+  
+  
+  print('get here!')
+  
+  this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,fill=Condition)) +
+    geom_bar(stat="identity", position="dodge") +
+    geom_errorbar(aes(ymin=ci_down, ymax=ci_up), colour="black", width=.1, position=position_dodge(3)) + #Fiddle with the position_dodge val until it looks right
+    facet_wrap(~ResponseWindow, scales = "free_x") +
+    geom_line(y=0.5, color='black')
+  
+  return(list(this_seqdata, this_plot))
+  
+}
+
+
+#Run this function, then print to the console to see the graph!
+foo = MakeBar(Probe_Data, 'SameVerbTest','Main')
 foo
 
 
