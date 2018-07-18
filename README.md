@@ -1,6 +1,10 @@
-#MPP with an eyetracker!
+# DANGER DANGER DANGER
 
-Unlike original MPP, MPP-2ET has been refactored so that common code for psychtoolbox and the Tobii are in a shared library with other extensions (like MPP-Concepts!). 
+As of 7/18/18, the presentation script contains an unknown bug that causes the video presentation to execute at slightly different speeds for the two conditions (!!!!). Remove this note when the problem is fixed. 
+
+# MPP-Eyetracker
+
+This version of MPP has been refactored so that common code for psychtoolbox and the Tobii are in a shared library with other extensions (like MPP-Concepts!). 
 
 The necessary libraries (to put in the RESOURCEFOLDER path) are at:
 
@@ -10,14 +14,6 @@ Tobii-PsychToolBox: https://github.com/mekline/Tobii-PsychToolBox
 
 Also put the audio, audio_MPP2ET, & movies folders in RESOURCEFOLDER
 
-Current state: This is the ~3rd pilot version; major differnces between the pilot versions are the exact timing of the test movies and the naming schemes for each part of the trial. Purpose of pilot: fixing eyedata pipeline and testing that children make it through the session and learn at least individual verbs.
+## Testing Notes
 
-TODO: Confirm that everything runs FROM the repo folder before deleting pilot/desktop version. (Running 1 pilot kid in the old folder first)
-
-
-Here's a test commit. 
-
-test from testing computer
-testing
-
-# MPP-3ET
+Remember not to commit exact ages into this repository: enter PPI via the [Subject Form](https://goo.gl/forms/7zJcjGcmWtXX77ku2) (link won't work unless you are signed in to the klinelab account), and use [SaltyDates](https://mekline.shinyapps.io/saltydates/) to get approx values to enter in the CSV. 
