@@ -194,7 +194,7 @@ try
     for i=1:ntrials
         disp(i)
         disp(MAIN_ITEMS.verbName(i))
-        Trial_Omnibus(i,'WithBias');
+        Trial_Omnibus(i,'BiasOnly');
         expTrial = GetSecs;
         expTime = expTrial - expStart;       
         Write_MPP_Trial(i, MAIN_ITEMS);
