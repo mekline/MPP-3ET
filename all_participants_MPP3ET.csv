@@ -24,3 +24,5 @@ SubjectNo,SubjectID,Experiment,ParticipantGroup,DAT_Directory,VerbCond,TrainingS
 12,2018-07-13_ChildPilot12,Pilot2,Child,./2018-07-13_ChildPilot12,Path,None,2018-07-13_ChildPilot12,VR,M,1503,4,1,WJH,Olivia,"Calibration successful, but child was trilingual and doesn't speak English well, but comprehends well.",,,,
 13,2018-07-13_ChildPilot13,Pilot2,Child,./2018-07-13_ChildPilot13,Manner,None,2018-07-13_ChildPilot13,VR,F,1327,3,7,WJH,Olivia,"Calibration  successful, but program crashed during trial 4",,,,
 14,2018-07-13_ChildPilot14,Pilot2,Child,./2018-07-13_ChildPilot14,Path,None,2018-07-13_ChildPilot14,VR,M,1796,4,11,WJH,Olivia ,"Calibration was successful, child was pretty attentive, and finished all trials successfully. ",,,,
+15,2018-07-15_ChildPilot15x3,Pilot2,Child,./2018-07-15_ChildPilot15x3,Manner,None,2018-07-15_ChildPilot15x3,VR,M,1246,3,4,WJH,Olivia ,"Calibration was successful, child was very attentive",,,,
+16,2018-07-23_ChildPilot16,Pilot-NoQT,Child,./2018-07-23_ChildPilot16,Path,None,2018-07-23_ChildPilot16,VR,F,1787,4,10,WJH,Olivia ,"Calibration was successful, child was very attentive",,,,
