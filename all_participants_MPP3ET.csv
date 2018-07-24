@@ -26,3 +26,4 @@ SubjectNo,SubjectID,Experiment,ParticipantGroup,DAT_Directory,VerbCond,TrainingS
 14,2018-07-13_ChildPilot14,Pilot2,Child,./2018-07-13_ChildPilot14,Path,None,2018-07-13_ChildPilot14,VR,M,1796,4,11,WJH,Olivia ,"Calibration was successful, child was pretty attentive, and finished all trials successfully. ",,,,
 15,2018-07-15_ChildPilot15x3,Pilot2,Child,./2018-07-15_ChildPilot15x3,Manner,None,2018-07-15_ChildPilot15x3,VR,M,1246,3,4,WJH,Olivia ,"Calibration was successful, child was very attentive",,,,
 16,2018-07-23_ChildPilot16,Pilot-NoQT,Child,./2018-07-23_ChildPilot16,Path,None,2018-07-23_ChildPilot16,VR,F,1787,4,10,WJH,Olivia ,"Calibration was successful, child was very attentive",,,,
+17,2018-07-23_ChildPilot17x2,Pilot-NoQT,Child,./2018-07-23_ChildPilot17x2,Manner,None,2018-07-23_ChildPilot17x2,VR,M,1689,4,7,WJH,Olivia,"Calibration was successful, child seemed to love the videos and was attentive",,,,
