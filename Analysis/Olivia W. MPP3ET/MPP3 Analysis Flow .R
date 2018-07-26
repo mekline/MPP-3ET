@@ -64,7 +64,16 @@ kids_to_process <- c('2018-07-09_ChildPilot5',
                      #'2018-07-10_ChildPilot8', #Comment out, causes probs from duplicated trials
                      '2018-07-11_ChildPilot9',
                      '2018-07-12_ChildPilot10',
-                     '2018-07-12_ChildPilot11x2')
+                     '2018-07-12_ChildPilot11x2',
+                     '2018-07-13_ChildPilot12',
+                     '2018-07-13_ChildPilot13',
+                     '2018-07-13_ChildPilot14',
+                     '2018-07-15_ChildPilot15x3',
+                     '2018-07-23_ChildPilot16',
+                     '2018-07-23_ChildPilot17x2',
+                     '2018-07-25_ChildPilot18x4',
+                     '2018-07-25_ChildPilot19',
+                     '2018-07-25_ChildPilot20')
                     
 #Set your directories
 
@@ -113,41 +122,44 @@ for(ID in pData$subjectID){
   myMainGazeFiles <- list.files(path = myDataDir, full.names = TRUE, pattern = ".*\\Main_.*.csv")
   myPracticeGazeFiles <- list.files(path = myDataDir, full.names = TRUE, pattern = ".*\\Practice_.*.csv")
   
-  myDatData <- read.csv(myDatFile, stringsAsFactors = FALSE)
-  
-  myTimestampData <- read.csv(myTimestampFile, stringsAsFactors = FALSE)
-   
-  myGazeData <- data.frame(NULL)
-  
-  for (f in myMainGazeFiles){
-    thisGazeData = read.csv(f, stringsAsFactors = FALSE)
-    thisGazeData$filename = f
-    thisGazeData$phaseGaze = 'Main'
-    if(nrow(myGazeData) == 0) {
-      
-      myGazeData = thisGazeData
-      
-    } else{
+  if(file.exists(myDatFile) & file.exists(myTimestampFile)){ #IF BOTH FILES EXIST
+    print(paste('found files for ', ID))
+    myDatData <- read.csv(myDatFile, stringsAsFactors = FALSE)
+    myTimestampData <- read.csv(myTimestampFile, stringsAsFactors = FALSE)
+    myGazeData <- data.frame(NULL)
+    
+    for (f in myMainGazeFiles){
+      thisGazeData = read.csv(f, stringsAsFactors = FALSE)
+      thisGazeData$filename = f
+      thisGazeData$phaseGaze = 'Main'
+      if(nrow(myGazeData) == 0) {
+        
+        myGazeData = thisGazeData
+        
+      } else{
+        myGazeData = bind_rows(myGazeData, thisGazeData)
+      }
+    }
+    
+    for (f in myPracticeGazeFiles){
+      thisGazeData = read.csv(f, stringsAsFactors = FALSE)
+      thisGazeData$filename = f
+      thisGazeData$phaseGaze = 'Practice'
       myGazeData = bind_rows(myGazeData, thisGazeData)
     }
+    #Add everything to the big DFs!
+    if (nrow(DatData) == 0){ #special case for 1st round
+      DatData = myDatData
+      TimestampData = myTimestampData
+      GazeData = myGazeData
+    } else {
+      DatData = bind_rows(DatData, myDatData)
+      TimestampData = bind_rows(TimestampData, myTimestampData)
+      GazeData = bind_rows(GazeData, myGazeData)
+    }
   }
-  
-  for (f in myPracticeGazeFiles){
-    thisGazeData = read.csv(f, stringsAsFactors = FALSE)
-    thisGazeData$filename = f
-    thisGazeData$phaseGaze = 'Practice'
-    myGazeData = bind_rows(myGazeData, thisGazeData)
-  }
-  #Add everything to the big DFs!
-  if (nrow(DatData) == 0){ #special case for 1st round
-    DatData = myDatData
-    TimestampData = myTimestampData
-    GazeData = myGazeData
-  } else {
-    DatData = bind_rows(DatData, myDatData)
-    TimestampData = bind_rows(TimestampData, myTimestampData)
-    GazeData = bind_rows(GazeData, myGazeData)
-  }
+  else{print(paste(ID, " not added, file not found"))}
+    
 }
 
 setwd(analysisDir)
