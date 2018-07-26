@@ -64,7 +64,16 @@ kids_to_process <- c('2018-07-09_ChildPilot5',
                      #'2018-07-10_ChildPilot8', #Comment out, causes probs from duplicated trials
                      '2018-07-11_ChildPilot9',
                      '2018-07-12_ChildPilot10',
-                     '2018-07-12_ChildPilot11x2')
+                     '2018-07-12_ChildPilot11x2',
+                     '2018-07-13_ChildPilot12',
+                     '2018-07-13_ChildPilot13',
+                     '2018-07-13_ChildPilot14',
+                     '2018-07-15_ChildPilot15x3',
+                     '2018-07-23_ChildPilot16',
+                     '2018-07-23_ChildPilot17x2',
+                     '2018-07-25_ChildPilot18x4',
+                     '2018-07-25_ChildPilot19',
+                     '2018-07-25_ChildPilot20')
                     
 #Set your directories
 
