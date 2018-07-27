@@ -77,8 +77,8 @@ kids_to_process <- c('2018-07-09_ChildPilot5',
                     
 #Set your directories
 
-myRepo = '~/Dropbox/_Projects/MannerPath-2ET/MannerPathPriming-3ET'
-#myRepo = '~/Desktop/MannerPathPriming-3ET'
+#myRepo = '~/Dropbox/_Projects/MannerPath-2ET/MannerPathPriming-3ET'
+myRepo = '~/Desktop/MannerPathPriming-3ET'
 analysisDir = paste(myRepo, '/Analysis/Olivia W. MPP3ET',sep='')
 dataDir = paste(myRepo, '/Data',sep='')
 
@@ -478,6 +478,7 @@ ProbeSummary <- make_time_sequence_data(Probe_Data, time_bin_size = 100000,
                                         aois = c("Left_Side", "Right_Side"),
                                         summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
 
+
 #Determined that 'still' and left/right videos are well behaved, just ened to look at 'start' (actual videos playing)
 #Things it isnt:
   #- just the SameVerb segments, which could be from 'drift' in length of the training chunk
@@ -501,11 +502,59 @@ SumSumSV <- ProbeSummary %>%
   mutate(lengthSegSec = lengthSeg/1000000) %>%
   filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
   filter(lengthSegSec > 4.5)
-
-
-ggplot(data = SumSumSV, aes(x=lengthSegSec, fill=Condition)) +
+#histogram for both 3 & 4-year-olds
+his<-ggplot(data = SumSumSV, aes(x=lengthSegSec, fill=Condition)) +
   geom_histogram(binwidth = 0.1) +
   facet_wrap(~Condition*mannerSideTest, nrow=2)
+
+his
+
+#filtering out just data for just the 4-year-olds
+#Probe_Data_4yo<-subset(Probe_Data, Probe_Data$Age.Years==4)
+
+#ProbeSummary_4yo <- make_time_sequence_data(Probe_Data_4yo, time_bin_size = 100000, 
+                                            #predictor_columns = c("Condition"),
+                                            #aois = c("Left_Side", "Right_Side"),
+                                            #summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
+
+#SumSumSV_4yo <- ProbeSummary_4yo %>%
+  #filter(probeType == 'SameVerbTest')%>%
+  #group_by(subjectID, probeSegment, Condition, trialNo, mannerSideTest)%>%
+  #dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
+  #ungroup() %>%
+  #mutate(lengthSegSec = lengthSeg/1000000) %>%
+  #filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
+  #filter(lengthSegSec > 4.5)
+
+#his_4yo<-ggplot(data = SumSumSV_4yo, aes(x=lengthSegSec, fill=Condition)) +
+  #geom_histogram(binwidth = 0.1) +
+  #facet_wrap(~Condition*mannerSideTest, nrow=2)
+
+#his_4yo
+
+#Histogram for 3-year-olds
+#Probe_Data_3yo<-subset(Probe_Data, Probe_Data$Age.Years==3)
+
+#ProbeSummary_3yo <- make_time_sequence_data(Probe_Data_3yo, time_bin_size = 100000, 
+                                            #predictor_columns = c("Condition"),
+                                            #aois = c("Left_Side", "Right_Side"),
+                                            #summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
+
+#SumSumSV_3yo <- ProbeSummary_3yo %>%
+  #filter(probeType == 'SameVerbTest')%>%
+  #group_by(subjectID, probeSegment, Condition, trialNo, mannerSideTest)%>%
+  #dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
+  #ungroup() %>%
+  #mutate(lengthSegSec = lengthSeg/1000000) %>%
+  #filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
+  #filter(lengthSegSec > 4.5)
+
+#his_3yo<-ggplot(data = SumSumSV_3yo, aes(x=lengthSegSec, fill=Condition)) +
+  #geom_histogram(binwidth = 0.1) +
+  #facet_wrap(~Condition*mannerSideTest, nrow=2)
+
+#his_3yo
+
 #facet_wrap(~probeSegment)
 
 #UPSHOT: They do have a weird shift, this is a problem!! For now, I think what it means is that we
@@ -519,6 +568,9 @@ ggplot(data = SumSumSV, aes(x=lengthSegSec, fill=Condition)) +
 #A function to generate the section-by-section plot, showing first looks-to-left (for single
 #presentation), then looks to manner/target
 
+#filtering out data for the 4-year-olds
+#data_4yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==4) #this line does the filtering
+#data_3yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==3)
 MakeSpaghetti <- function(eyedata, pt, ep){
   these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
                           probeSegment %in% c('left_video','right_video'))
@@ -567,13 +619,14 @@ MakeSpaghetti <- function(eyedata, pt, ep){
 
 
 #Run this function, then print to the console to see the graph!
-foo = MakeSpaghetti(Probe_Data, 'SameVerbTest','Main')
-foo
+#foo_spa = MakeSpaghetti(data_4yo, 'SameVerbTest','Main')
+#foo_spa = MakeSpaghetti(data_3yo, 'SameVerbTest', 'Main')
+foo_spa = MakeSpaghetti(Probe_Data, 'SameVerbTest', 'Main')
+foo_spa
 
 
 
 #And one for a bar graph!
-
 MakeBar <- function(eyedata, pt, ep){
   these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
                            probeSegment %in% c('left_video','right_video'))
@@ -620,9 +673,10 @@ MakeBar <- function(eyedata, pt, ep){
   
 }
 
-
 #Run this function, then print to the console to see the graph!
-foo = MakeBar(Probe_Data, 'SameVerbTest','Main')
+#foo = MakeBar(data_4yo, 'SameVerbTest','Main')
+#foo = MakeBar(data_3yo, 'SameVerbTest','Main')
+foo = MakeBar(Probe_Data, 'SameVerbTest', 'Main')
 foo
 
 
