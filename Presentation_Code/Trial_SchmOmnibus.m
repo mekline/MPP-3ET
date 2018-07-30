@@ -33,9 +33,9 @@ function [response] = Trial_Omnibus(trialNo, version)
     movie_recenter = strcat(RESOURCEFOLDER, '/movies/babylaugh.mov');
     
 
-    if strcmp(CONDITION,'Manner')
+    if strcmp(CONDITION,'Schmanner')
         movie_negative = movie_path_Bias;
-    elseif strcmp(CONDITION,'Path')
+    elseif strcmp(CONDITION,'Schmath')
         movie_negative = movie_manner_Bias;
     else
         print('couldnt assign a negative example');

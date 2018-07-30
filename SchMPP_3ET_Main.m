@@ -152,7 +152,7 @@ Screen(EXPWIN,'Flip');
 
 disp(['Starting Experiment: ', EXPERIMENT]);
 %---And the experiment runs here!
-Do_MPP_Exp();
+Do_SchMPP_Exp();
 
 %---After the experiment finishes, clean up and exit nicely
 Screen('CloseAll');
