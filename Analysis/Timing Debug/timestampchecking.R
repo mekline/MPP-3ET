@@ -69,6 +69,9 @@ childdata <- alldirs %>%
   filter(str_detect(tolower(ID), 'child')) %>%
   mutate(datatype='Child')
 
+sch <- alldirs %>%
+  filter(str_detect(tolower(ID), 'schdummy')) %>%
+  mutate(datatype = 'schmanner')
 
 notr <- alldirs %>%
   filter(str_detect(tolower(ID), 'notraining')) %>%
@@ -82,7 +85,7 @@ dt <- alldirs %>%
   filter(str_detect(tolower(ID), 'dummytesting')) %>%
   mutate(datatype = 'Dummytesting')
 
-alldirs <- rbind(Olivia, dt, childdata, notr)
+alldirs <- rbind(sch, Olivia, dt, childdata, notr)
 
 alldirs <- alldirs %>%
   mutate(ID = str_remove(ID, './')) #%>%
@@ -106,11 +109,12 @@ for(myID in alldirs$ID){
     myDatData <- read.csv(myDatFile, stringsAsFactors = FALSE)
       
     myTimestampData <- read.csv(myTimestampFile, stringsAsFactors = FALSE)
-    myTimestampData$dataType <- ifelse(str_detect(tolower(myID), '2018-07-23'),'childNoQT', 
+    myTimestampData$dataType <- ifelse(str_detect(tolower(myID), 'schd'),'schmanners', 
+                                ifelse(str_detect(tolower(myID), '2018-07-23'),'childNoQT', 
                                 ifelse(str_detect(tolower(myID), '2018-07-25'),'childNoQT', 
                                 ifelse(str_detect(tolower(myID), 'child'),'child', 
                                 ifelse(str_detect(tolower(myID), 'noqt'),'noQT',
-                                ifelse(str_detect(tolower(myID), 'notraining'),'notraining','OTHER')))))
+                                ifelse(str_detect(tolower(myID), 'notraining'),'notraining','OTHER'))))))
     #Add everything to the big DFs!
     if (nrow(TimestampData) == 0){ #special case for 1st round
       TimestampData = myTimestampData
