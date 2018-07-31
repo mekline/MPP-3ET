@@ -53,8 +53,9 @@ end
 %Make sure paths are set correctly (your system may need to update these!)
 addpath(genpath('/Applications/TobiiProSDK'));
 addpath(genpath('/Applications/PsychToolBox'));
-addpath(genpath('/Users/snedlab/Desktop/MPP-Common-Resources'));
 RESOURCEFOLDER = '/Users/snedlab/Desktop/MPP-Common-Resources';
+%RESOURCEFOLDER = '/Users/mekline/Dropbox/_DB_Projects/MannerPath-2ET/MPP-Common-Resources';
+addpath(genpath(RESOURCEFOLDER));
 EXPFOLDER = fileparts(which('MPP_3ET_Main.m')); %add this folder to the path too.
 addpath(genpath(EXPFOLDER));
 mkdir([EXPFOLDER, '/Data/', SUBJECT]);
