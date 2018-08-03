@@ -73,7 +73,19 @@ kids_to_process <- c('2018-07-09_ChildPilot5',
                      '2018-07-23_ChildPilot17x2',
                      '2018-07-25_ChildPilot18x4',
                      '2018-07-25_ChildPilot19',
-                     '2018-07-25_ChildPilot20')
+                     '2018-07-25_ChildPilot20',
+                     '2018-07-26_ChildPilot21',
+                     '2018-07-26_ChildPilot22',
+                     '2018-07-26_ChildPilot23',
+                     '2018-07-26_ChildPilot24',
+                     '2018-07-27_ChildPilot25',
+                     '2018-07-27_ChildPilot26',
+                     '2018-07-27_ChildPilot27x3',
+                     '2018-07-30_ChildPilot28',
+                     '2018-07-30_ChildPilot29',
+                     '2018-07-30_ChildPilot30')
+                     #'2018-07-31_ChildPilot31',
+                     #'2018-07-31_ChildPilot32x2' # THESE ARE THE SCHMATH ONES
                     
 #Set your directories
 
