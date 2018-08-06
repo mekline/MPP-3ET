@@ -482,92 +482,45 @@ sd(final_summary$NumTrials)
 #TRIAL LENGTH EXPLORATION
 #########################
 
-# #The graph below tends to make it look like manner trials last longer than path trials???
-# #Explore here to figure out whats going on
-# 
-# ProbeSummary <- make_time_sequence_data(Probe_Data, time_bin_size = 100000, 
-#                                         predictor_columns = c("Condition"),
-#                                         aois = c("Left_Side", "Right_Side"),
-#                                         summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
-# 
-# 
-# #Determined that 'still' and left/right videos are well behaved, just ened to look at 'start' (actual videos playing)
-# #Things it isnt:
-#   #- just the SameVerb segments, which could be from 'drift' in length of the training chunk
-#   #- due to trackloss: even if we limit to very strict trials, the difference is reliably present. 
-#   #- due to manner/path being presented on the right vs left: Manner still longer. 
-#   #- New in 3ET - same the case in 2ET when I pasted the code ove there :( :( :(
-# SumSum <- ProbeSummary %>%
-#   filter(probeType == 'Bias')%>%
-#   group_by(subjectID, probeSegment, Condition, trialNo, mannerSideBias)%>%
-#   dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
-#   ungroup() %>%
-#   mutate(lengthSegSec = lengthSeg/1000000) %>%
-#   filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
-#   filter(lengthSegSec > 4.5)
-# 
-# SumSumSV <- ProbeSummary %>%
-#   filter(probeType == 'SameVerbTest')%>%
-#   group_by(subjectID, probeSegment, Condition, trialNo, mannerSideTest)%>%
-#   dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
-#   ungroup() %>%
-#   mutate(lengthSegSec = lengthSeg/1000000) %>%
-#   filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
-#   filter(lengthSegSec > 4.5)
-# #histogram for both 3 & 4-year-olds
-# his<-ggplot(data = SumSumSV, aes(x=lengthSegSec, fill=Condition)) +
-#   geom_histogram(binwidth = 0.1) +
-#   facet_wrap(~Condition*mannerSideTest, nrow=2)
-# 
-# his
-# 
-# #filtering out just data for just the 4-year-olds
-# #Probe_Data_4yo<-subset(Probe_Data, Probe_Data$Age.Years==4)
-# 
-# #ProbeSummary_4yo <- make_time_sequence_data(Probe_Data_4yo, time_bin_size = 100000, 
-#                                             #predictor_columns = c("Condition"),
-#                                             #aois = c("Left_Side", "Right_Side"),
-#                                             #summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
-# 
-# #SumSumSV_4yo <- ProbeSummary_4yo %>%
-#   #filter(probeType == 'SameVerbTest')%>%
-#   #group_by(subjectID, probeSegment, Condition, trialNo, mannerSideTest)%>%
-#   #dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
-#   #ungroup() %>%
-#   #mutate(lengthSegSec = lengthSeg/1000000) %>%
-#   #filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
-#   #filter(lengthSegSec > 4.5)
-# 
-# #his_4yo<-ggplot(data = SumSumSV_4yo, aes(x=lengthSegSec, fill=Condition)) +
-#   #geom_histogram(binwidth = 0.1) +
-#   #facet_wrap(~Condition*mannerSideTest, nrow=2)
-# 
-# #his_4yo
-# 
-# #Histogram for 3-year-olds
-# #Probe_Data_3yo<-subset(Probe_Data, Probe_Data$Age.Years==3)
-# 
-# #ProbeSummary_3yo <- make_time_sequence_data(Probe_Data_3yo, time_bin_size = 100000, 
-#                                             #predictor_columns = c("Condition"),
-#                                             #aois = c("Left_Side", "Right_Side"),
-#                                             #summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
-# 
-# #SumSumSV_3yo <- ProbeSummary_3yo %>%
-#   #filter(probeType == 'SameVerbTest')%>%
-#   #group_by(subjectID, probeSegment, Condition, trialNo, mannerSideTest)%>%
-#   #dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
-#   #ungroup() %>%
-#   #mutate(lengthSegSec = lengthSeg/1000000) %>%
-#   #filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
-#   #filter(lengthSegSec > 4.5)
-# 
-# #his_3yo<-ggplot(data = SumSumSV_3yo, aes(x=lengthSegSec, fill=Condition)) +
-#   #geom_histogram(binwidth = 0.1) +
-#   #facet_wrap(~Condition*mannerSideTest, nrow=2)
-# 
-# #his_3yo
-# 
-# #facet_wrap(~probeSegment)
+#The graph below tends to make it look like manner trials last longer than path trials???
+#Explore here to figure out whats going on
+
+ProbeSummary <- make_time_sequence_data(Probe_Data, time_bin_size = 100000,
+                                        predictor_columns = c("Condition"),
+                                        aois = c("Left_Side", "Right_Side"),
+                                        summarize_by = c("subjectID", "trialNo","probeSegment", "probeType", "mannerSideBias", "mannerSideTest"))
+
+
+#Determined that 'still' and left/right videos are well behaved, just ened to look at 'start' (actual videos playing)
+#Things it isnt:
+  #- just the SameVerb segments, which could be from 'drift' in length of the training chunk
+  #- due to trackloss: even if we limit to very strict trials, the difference is reliably present.
+  #- due to manner/path being presented on the right vs left: Manner still longer.
+  #- New in 3ET - same the case in 2ET when I pasted the code ove there :( :( :(
+SumSum <- ProbeSummary %>%
+  filter(probeType == 'Bias')%>%
+  group_by(subjectID, probeSegment, Condition, trialNo, mannerSideBias)%>%
+  dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
+  ungroup() %>%
+  mutate(lengthSegSec = lengthSeg/1000000) %>%
+  filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
+  filter(lengthSegSec > 4.5)
+
+SumSumSV <- ProbeSummary %>%
+  filter(probeType == 'SameVerbTest')%>%
+  group_by(subjectID, probeSegment, Condition, trialNo, mannerSideTest)%>%
+  dplyr::summarize(minTime = min(Time), maxTime = max(Time), lengthSeg = maxTime - minTime) %>%
+  ungroup() %>%
+  mutate(lengthSegSec = lengthSeg/1000000) %>%
+  filter(probeSegment %in% c('compareVideo1_start', 'compareVideo2_start')) %>%
+  filter(lengthSegSec > 4.5)
+#histogram for both 3 & 4-year-olds
+his<-ggplot(data = SumSumSV, aes(x=lengthSegSec, fill=Condition)) +
+  geom_histogram(binwidth = 0.1) +
+  facet_wrap(~Condition, nrow=2)
+his
+ggsave("Graphs/time_histogram.jpg", his, height = 4, width = 8)
+
 
 #UPSHOT: They do have a weird shift, this is a problem!! For now, I think what it means is that we
 #shouldn't trust or make decisions about the specific times things happen (or pick subsets) but I
@@ -583,65 +536,111 @@ sd(final_summary$NumTrials)
 #Make Age.Years a factor for plotting (Leave AgeInDays alone for any 'real' age comparisons we want to do!)
 Probe_Data$Age.Years <- as.factor(Probe_Data$Age.Years)
 
-#filtering out data for the 4-year-olds
+#filtering out data for each age bin
 data_4yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==4) #this line does the filtering
 data_3yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==3)
 
-MakeSpaghetti <- function(eyedata, pt, ep){
-  these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
-                          probeSegment %in% c('left_video','right_video'))
+#Refactoring the functions: separate out getting/formatting the relevant data from plotting it
+MakeTimeSequence <- function(eyedata, pt, ep, pred_cols){
+
+  #these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
+  #                         probeSegment %in% c('left_video','right_video'))
   these_comp1 <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
                         probeSegment %in% c('compareVideo1_start','compareVideo1_still'))
   these_comp2 <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
                         probeSegment %in% c('compareVideo2_start','compareVideo2_still'))
-
-  LR_seq <- make_time_sequence_data(these_LR_looks, time_bin_size = 100000, 
-                                         predictor_columns = c("Age.Years", "Condition"),
-                                         aois = "Left_Side",
-                                         summarize_by = "subjectID")
+  
+  #LR_seq <- make_time_sequence_data(these_LR_looks, time_bin_size = 100000, 
+  #                                  predictor_columns = pred_cols,
+  #                                  aois = "Left_Side",
+  #                                  summarize_by = "subjectID")
   comp1_seq <- make_time_sequence_data(these_comp1, time_bin_size = 100000, 
-                                         predictor_columns = c("Age.Years", "Condition"),
-                                         aois = c("In_Manner_Side"),
-                                         summarize_by = "subjectID")
+                                       predictor_columns = pred_cols,
+                                       aois = c("In_Manner_Side"),
+                                       summarize_by = "subjectID")
   comp2_seq <- make_time_sequence_data(these_comp2, time_bin_size = 100000, 
-                                         predictor_columns = c("Age.Years", "Condition"),
-                                         aois = c("In_Manner_Side"),
-                                         summarize_by = "subjectID")
+                                       predictor_columns = pred_cols,
+                                       aois = c("In_Manner_Side"),
+                                       summarize_by = "subjectID")
   
-  this_seqdata = bind_rows("LR" = LR_seq, 
-                       "Comp1" = comp1_seq,
-                       "Comp2" = comp2_seq,.id='ResponseWindow')
+  this_seqdata = bind_rows("Comp1" = comp1_seq,
+                           "Comp2" = comp2_seq,.id='ResponseWindow')
   
+  print('get here!')
   this_seqdata <- this_seqdata %>%
     mutate(ResponseWindow = factor(ResponseWindow))%>%
-    mutate(ResponseWindow = factor(ResponseWindow, levels(ResponseWindow)[c(3,1,2)])) %>%
+    mutate(ResponseWindow = factor(ResponseWindow, levels(ResponseWindow)[c(1,2)])) %>% #Need to add (3,1,2) with LR
     mutate(Time_in_Sec = Time/1000000) %>%
     filter(!is.na(Prop))%>%
-    group_by(Age.Years, Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
-    #group_by(Age.Years, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    group_by(.dots=pred_cols, ResponseWindow, TimeBin, Time_in_Sec) %>%
     dplyr::summarize(themean = mean(Prop, na.rm=TRUE))
-
-   
-  print('get here!')
   
-  this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,color=Age.Years)) +
-    geom_line(stat="identity") +
-    #geom_errorbar(aes(ymin=ci_down, ymax=ci_up), colour="black", width=.1, position=position_dodge(1.5)) + #Why point 9? Hell if I know!
-    facet_wrap(~Condition*ResponseWindow, scales = "free_x") +
-    geom_line(y=0.5, color='black')
-  
-  return(list(this_seqdata, this_plot))
-
+  return(this_seqdata)
 }
 
+#'Vanilla' (plot with no Left-Right phase) in SameVerb
+main_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 'SameVerbTest','Main',c("Condition")), 
+                      aes(y=themean,x=Time_in_Sec,color=Condition)) +
+    geom_line(stat="identity") +
+    facet_wrap(~ResponseWindow, scales = "free_x") +
+    geom_line(y=0.5, color='black')
 
-#Run this function, then print to the console to see the graph!
-foo_spa = MakeSpaghetti(data_4yo, 'SameVerbTest','Main')
-foo_spa = MakeSpaghetti(data_3yo, 'SameVerbTest', 'Main')
-foo_spa = MakeSpaghetti(Probe_Data, 'SameVerbTest', 'Main')
-foo_spa
+ggsave('Graphs/Manner_v_Path_SV.jpg', main_plotSV, height = 4, width = 8)
+ 
+#But, what's up with the timing? See histogram from above...
+#So, let's try looking at ages instead (in black to show we're combining both conditions!)
+
+age_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 'SameVerbTest','Main',c("Age.Years")), 
+                    aes(y=themean,x=Time_in_Sec,linetype=Age.Years)) +
+  geom_line(stat="identity") +
+  geom_line(y=0.5, color='black')
+
+ggsave('Graphs/3s_v_4s_SV.jpg', age_plotSV, height = 4, width = 8)
+
+#They seem different! Since we have that timing bug, it's most useful to plot the conditions separately...
+ageCond_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 'SameVerbTest','Main',c("Condition", "Age.Years")), 
+                     aes(y=themean,x=Time_in_Sec,linetype=Age.Years, color=Condition)) +
+  geom_line(stat="identity") +
+  facet_wrap(~Condition*ResponseWindow, scales = "free_x") +
+  geom_line(y=0.5, color='black')
+
+ggsave('Graphs/Age_by_Condition_SV.jpg', ageCond_plotSV, height = 8, width = 8)
 
 
+#NOW do all that agian in the Bias phase!
+
+#'Vanilla' (plot with no Left-Right phase) in Bias
+main_plotBias <- ggplot(data = MakeTimeSequence(Probe_Data, 'Bias','Main',c("Condition")), 
+                      aes(y=themean,x=Time_in_Sec,color=Condition)) +
+  geom_line(stat="identity") +
+  facet_wrap(~ResponseWindow, scales = "free_x") +
+  geom_line(y=0.5, color='black')
+
+ggsave('Graphs/Manner_v_Path_Bias.jpg', main_plotBias, height = 4, width = 8)
+
+#But, what's up with the timing? See histogram from above...
+#So, let's try looking at ages instead (in black to show we're combining both conditions!)
+
+age_plotBias <- ggplot(data = MakeTimeSequence(Probe_Data, 'Bias','Main',c("Age.Years")), 
+                     aes(y=themean,x=Time_in_Sec,linetype=Age.Years)) +
+  geom_line(stat="identity") +
+  geom_line(y=0.5, color='black')
+
+ggsave('Graphs/3s_v_4s_Bias.jpg', age_plotBias, height = 4, width = 8)
+
+#They seem different! Since we have that timing bug, it's most useful to plot the conditions separately...
+ageCond_plotBias <- ggplot(data = MakeTimeSequence(Probe_Data, 'Bias','Main',c("Condition", "Age.Years")), 
+                         aes(y=themean,x=Time_in_Sec,linetype=Age.Years, color=Condition)) +
+  geom_line(stat="identity") +
+  facet_wrap(~Condition*ResponseWindow, scales = "free_x") +
+  geom_line(y=0.5, color='black')
+
+ggsave('Graphs/Age_by_Condition_Bias.jpg', ageCond_plotBias, height = 8, width = 8)
+
+
+
+
+#### OLD GRAPHING IDIOM BELOW HERE!
 
 #And one for a bar graph!
 MakeBar <- function(eyedata, pt, ep){
@@ -701,4 +700,12 @@ foo = MakeBar(data_3yo, 'SameVerbTest','Main')
 #foo = MakeBar(Probe_Data, 'SameVerbTest', 'Main')
 foo
 
+
+#########################
+# Bootstrapping divergence analysis!
+#########################
+
+#Since there is a bug in the code resulting in different lengths for Manner and Path conditions, let's start by
+#running some analysis *within* each condition, asking whether 3 and 4 year olds show different patterns. Start by
+#doing this in the SV phase as we have been, then move to the Bias phase. 
 
