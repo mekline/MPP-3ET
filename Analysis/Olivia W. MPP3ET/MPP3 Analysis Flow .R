@@ -592,15 +592,18 @@ MakeSpaghetti <- function(eyedata, pt, ep){
                         probeSegment %in% c('compareVideo2_start','compareVideo2_still'))
 
   LR_seq <- make_time_sequence_data(these_LR_looks, time_bin_size = 100000, 
-                                         predictor_columns = c("Condition"),
+                                         predictor_columns = c("Age.Years"),
+                                         #predictor_columns = c("Condition"),
                                          aois = "Left_Side",
                                          summarize_by = "subjectID")
   comp1_seq <- make_time_sequence_data(these_comp1, time_bin_size = 100000, 
-                                         predictor_columns = c("Condition"),
+                                         #predictor_columns = c("Condition"),
+                                         predictor_columns = c("Age.Years"),
                                          aois = c("In_Manner_Side"),
                                          summarize_by = "subjectID")
   comp2_seq <- make_time_sequence_data(these_comp2, time_bin_size = 100000, 
-                                         predictor_columns = c("Condition"),
+                                         #predictor_columns = c("Condition"),
+                                         predictor_columns = c("Age.Years"),
                                          aois = c("In_Manner_Side"),
                                          summarize_by = "subjectID")
   
@@ -613,13 +616,14 @@ MakeSpaghetti <- function(eyedata, pt, ep){
     mutate(ResponseWindow = factor(ResponseWindow, levels(ResponseWindow)[c(3,1,2)])) %>%
     mutate(Time_in_Sec = Time/1000000) %>%
     filter(!is.na(Prop))%>%
-    group_by(Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    #group_by(Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    group_by(Age.Years, ResponseWindow, TimeBin, Time_in_Sec) %>%
     dplyr::summarize(themean = mean(Prop, na.rm=TRUE))
 
    
   print('get here!')
   
-  this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,color=Condition)) +
+  this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,color=Age.Years)) +
     geom_line(stat="identity") +
     #geom_errorbar(aes(ymin=ci_down, ymax=ci_up), colour="black", width=.1, position=position_dodge(1.5)) + #Why point 9? Hell if I know!
     facet_wrap(~ResponseWindow, scales = "free_x") +
@@ -648,15 +652,18 @@ MakeBar <- function(eyedata, pt, ep){
                         probeSegment %in% c('compareVideo2_start','compareVideo2_still'))
   
   LR_seq <- make_time_sequence_data(these_LR_looks, time_bin_size = 4000000, 
-                                    predictor_columns = c("Condition"),
+                                    #predictor_columns = c("Condition"),
+                                    predictor_columns = c("Age.Years"),
                                     aois = "Left_Side",
                                     summarize_by = "subjectID")
   comp1_seq <- make_time_sequence_data(these_comp1, time_bin_size = 4000000, 
-                                       predictor_columns = c("Condition"),
+                                       #predictor_columns = c("Condition"),
+                                       predictor_columns = c("Age.Years"),
                                        aois = c("In_Manner_Side"),
                                        summarize_by = "subjectID")
   comp2_seq <- make_time_sequence_data(these_comp2, time_bin_size = 4000000, 
-                                       predictor_columns = c("Condition"),
+                                       #predictor_columns = c("Condition"),
+                                       predictor_columns = c("Age.Years"),
                                        aois = c("In_Manner_Side"),
                                        summarize_by = "subjectID")
   
@@ -669,13 +676,15 @@ MakeBar <- function(eyedata, pt, ep){
     mutate(ResponseWindow = factor(ResponseWindow, levels(ResponseWindow)[c(3,1,2)])) %>%
     mutate(Time_in_Sec = Time/1000000) %>%
     filter(!is.na(Prop))%>%
-    group_by(Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    #group_by(Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    group_by(Age.Years, ResponseWindow, TimeBin, Time_in_Sec) %>%
     dplyr::summarize(themean = mean(Prop, na.rm=TRUE), ci_down = bootdown(Prop), ci_up = bootup(Prop))
   
   
   print('get here!')
   
-  this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,fill=Condition)) +
+  this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,fill=Age.Years)) +
+  #this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,fill=Condition)) +
     geom_bar(stat="identity", position="dodge") +
     geom_errorbar(aes(ymin=ci_down, ymax=ci_up), colour="black", width=.1, position=position_dodge(3)) + #Fiddle with the position_dodge val until it looks right
     facet_wrap(~ResponseWindow, scales = "free_x") +
@@ -686,8 +695,8 @@ MakeBar <- function(eyedata, pt, ep){
 }
 
 #Run this function, then print to the console to see the graph!
-foo = MakeBar(data_4yo, 'SameVerbTest','Main')
-#foo = MakeBar(data_3yo, 'SameVerbTest','Main')
+#foo = MakeBar(data_4yo, 'SameVerbTest','Main')
+foo = MakeBar(data_3yo, 'SameVerbTest','Main')
 #foo = MakeBar(Probe_Data, 'SameVerbTest', 'Main')
 foo
 
