@@ -89,8 +89,8 @@ kids_to_process <- c('2018-07-09_ChildPilot5',
                     
 #Set your directories
 
-#myRepo = '~/Dropbox/_Projects/MannerPath-2ET/MannerPathPriming-3ET'
-myRepo = '~/Desktop/MannerPathPriming-3ET'
+myRepo = '~/Dropbox/_DB_Projects/MannerPath-2ET/MannerPathPriming-3ET'
+#myRepo = '~/Desktop/MannerPathPriming-3ET'
 analysisDir = paste(myRepo, '/Analysis/Olivia W. MPP3ET',sep='')
 dataDir = paste(myRepo, '/Data',sep='')
 
@@ -580,9 +580,13 @@ sd(final_summary$NumTrials)
 #A function to generate the section-by-section plot, showing first looks-to-left (for single
 #presentation), then looks to manner/target
 
+#Make Age.Years a factor for plotting (Leave AgeInDays alone for any 'real' age comparisons we want to do!)
+Probe_Data$Age.Years <- as.factor(Probe_Data$Age.Years)
+
 #filtering out data for the 4-year-olds
-#data_4yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==4) #this line does the filtering
+data_4yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==4) #this line does the filtering
 data_3yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==3)
+
 MakeSpaghetti <- function(eyedata, pt, ep){
   these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
                           probeSegment %in% c('left_video','right_video'))
@@ -592,18 +596,15 @@ MakeSpaghetti <- function(eyedata, pt, ep){
                         probeSegment %in% c('compareVideo2_start','compareVideo2_still'))
 
   LR_seq <- make_time_sequence_data(these_LR_looks, time_bin_size = 100000, 
-                                         predictor_columns = c("Age.Years"),
-                                         #predictor_columns = c("Condition"),
+                                         predictor_columns = c("Age.Years", "Condition"),
                                          aois = "Left_Side",
                                          summarize_by = "subjectID")
   comp1_seq <- make_time_sequence_data(these_comp1, time_bin_size = 100000, 
-                                         #predictor_columns = c("Condition"),
-                                         predictor_columns = c("Age.Years"),
+                                         predictor_columns = c("Age.Years", "Condition"),
                                          aois = c("In_Manner_Side"),
                                          summarize_by = "subjectID")
   comp2_seq <- make_time_sequence_data(these_comp2, time_bin_size = 100000, 
-                                         #predictor_columns = c("Condition"),
-                                         predictor_columns = c("Age.Years"),
+                                         predictor_columns = c("Age.Years", "Condition"),
                                          aois = c("In_Manner_Side"),
                                          summarize_by = "subjectID")
   
@@ -616,8 +617,8 @@ MakeSpaghetti <- function(eyedata, pt, ep){
     mutate(ResponseWindow = factor(ResponseWindow, levels(ResponseWindow)[c(3,1,2)])) %>%
     mutate(Time_in_Sec = Time/1000000) %>%
     filter(!is.na(Prop))%>%
-    #group_by(Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
-    group_by(Age.Years, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    group_by(Age.Years, Condition, ResponseWindow, TimeBin, Time_in_Sec) %>%
+    #group_by(Age.Years, ResponseWindow, TimeBin, Time_in_Sec) %>%
     dplyr::summarize(themean = mean(Prop, na.rm=TRUE))
 
    
@@ -626,7 +627,7 @@ MakeSpaghetti <- function(eyedata, pt, ep){
   this_plot <- ggplot(data = this_seqdata, aes(y=themean,x=Time_in_Sec,color=Age.Years)) +
     geom_line(stat="identity") +
     #geom_errorbar(aes(ymin=ci_down, ymax=ci_up), colour="black", width=.1, position=position_dodge(1.5)) + #Why point 9? Hell if I know!
-    facet_wrap(~ResponseWindow, scales = "free_x") +
+    facet_wrap(~Condition*ResponseWindow, scales = "free_x") +
     geom_line(y=0.5, color='black')
   
   return(list(this_seqdata, this_plot))
@@ -635,9 +636,9 @@ MakeSpaghetti <- function(eyedata, pt, ep){
 
 
 #Run this function, then print to the console to see the graph!
-#foo_spa = MakeSpaghetti(data_4yo, 'SameVerbTest','Main')
+foo_spa = MakeSpaghetti(data_4yo, 'SameVerbTest','Main')
 foo_spa = MakeSpaghetti(data_3yo, 'SameVerbTest', 'Main')
-#foo_spa = MakeSpaghetti(Probe_Data, 'SameVerbTest', 'Main')
+foo_spa = MakeSpaghetti(Probe_Data, 'SameVerbTest', 'Main')
 foo_spa
 
 
