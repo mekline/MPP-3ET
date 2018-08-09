@@ -43,6 +43,7 @@ global CONDITION %Manner, Path, Action, or Effect
 global TOEXTEND %Extend or NoExtend
 global EXTENDPRACTICE %ExtendPractice or NoPractice %MK's not sure what this is for!
 %global SET % 1 or 2, which set of four verbs will start
+global LOGFILE %For saving timing info as the script goes. 
 
 if ~ischar(inputs.SubjectID)
     SUBJECT = num2str(inputs.SubjectID);
@@ -53,8 +54,8 @@ end
 %Make sure paths are set correctly (your system may need to update these!)
 addpath(genpath('/Applications/TobiiProSDK'));
 addpath(genpath('/Applications/PsychToolBox'));
-RESOURCEFOLDER = '/Users/snedlab/Desktop/MPP-Common-Resources';
-%RESOURCEFOLDER = '/Users/mekline/Dropbox/_DB_Projects/MannerPath-2ET/MPP-Common-Resources';
+%RESOURCEFOLDER = '/Users/snedlab/Desktop/MPP-Common-Resources';
+RESOURCEFOLDER = '/Users/mekline/Dropbox/_DB_Projects/MannerPath-2ET/MPP-Common-Resources';
 addpath(genpath(RESOURCEFOLDER));
 EXPFOLDER = fileparts(which('MPP_3ET_Main.m')); %add this folder to the path too.
 addpath(genpath(EXPFOLDER));
@@ -68,6 +69,9 @@ CONDITION = inputs.Condition;
 TOEXTEND = inputs.ToExtend;
 %SET = inputs.Set;
 EXTENDPRACTICE = inputs.ExtendPractice;
+
+%Check or create a logfile
+LOGFILE = fopen('log.txt','wt');
 
 % Validate inputs
 Conditions = {'Manner', 'Path', 'Action', 'Effect'};
@@ -156,6 +160,8 @@ disp(['Starting Experiment: ', EXPERIMENT]);
 Do_MPP_Exp();
 
 %---After the experiment finishes, clean up and exit nicely
+fprintf(LOGFILE, '%s', 'the end of file');
+fclose(LOGFILE); 
 Screen('CloseAll');
 Closeout_PTool;
 

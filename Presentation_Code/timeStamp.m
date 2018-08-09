@@ -9,7 +9,7 @@ disp(label);
 if USE_EYETRACKER
     cellObj = {SUBJECT, TOBII.get_system_time_stamp, label}; 
 else
-    mytime = GetSecs;
+    mytime = GetSecs*1000000;
     cellObj = {SUBJECT, mytime, label}; 
 end
 

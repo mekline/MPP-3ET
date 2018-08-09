@@ -527,7 +527,7 @@ ggsave("Graphs/time_histogram.jpg", his, height = 4, width = 8)
 # think we CAN interpret the times. 
 
 #########################
-# GRAPHS (It's very exciting!)
+# GRAPH DATA GENERATION (Idiom setup)
 #########################
 
 #A function to generate the section-by-section plot, showing first looks-to-left (for single
@@ -541,7 +541,7 @@ data_4yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==4) #this line does the 
 data_3yo<-subset(ERData_zeroed, ERData_zeroed$Age.Years==3)
 
 #Refactoring the functions: separate out getting/formatting the relevant data from plotting it
-MakeTimeSequence <- function(eyedata, pt, ep, pred_cols){
+MakeTimeSequence <- function(eyedata, pt, ep, pred_cols, myaois){
 
   #these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
   #                         probeSegment %in% c('left_video','right_video'))
@@ -556,17 +556,15 @@ MakeTimeSequence <- function(eyedata, pt, ep, pred_cols){
   #                                  summarize_by = "subjectID")
   comp1_seq <- make_time_sequence_data(these_comp1, time_bin_size = 100000, 
                                        predictor_columns = pred_cols,
-                                       aois = c("In_Manner_Side"),
+                                       aois = myaois,
                                        summarize_by = "subjectID")
   comp2_seq <- make_time_sequence_data(these_comp2, time_bin_size = 100000, 
                                        predictor_columns = pred_cols,
-                                       aois = c("In_Manner_Side"),
+                                       aois = myaois,
                                        summarize_by = "subjectID")
   
   this_seqdata = bind_rows("Comp1" = comp1_seq,
                            "Comp2" = comp2_seq,.id='ResponseWindow')
-  
-  print('get here!')
   this_seqdata <- this_seqdata %>%
     mutate(ResponseWindow = factor(ResponseWindow))%>%
     mutate(ResponseWindow = factor(ResponseWindow, levels(ResponseWindow)[c(1,2)])) %>% #Need to add (3,1,2) with LR
@@ -578,26 +576,97 @@ MakeTimeSequence <- function(eyedata, pt, ep, pred_cols){
   return(this_seqdata)
 }
 
-#'Vanilla' (plot with no Left-Right phase) in SameVerb
-main_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 'SameVerbTest','Main',c("Condition")), 
+#Refactoring the functions: separate out getting/formatting the relevant data from plotting it
+MakeProps <- function(eyedata, pt, ep, pred_cols, myaois){
+  
+  #these_LR_looks <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
+  #                         probeSegment %in% c('left_video','right_video'))
+  these_comp1 <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
+                        probeSegment %in% c('compareVideo1_start','compareVideo1_still'))
+  these_comp2 <- filter(eyedata, probeType == pt, ExperimentPhase == ep,
+                        probeSegment %in% c('compareVideo2_start','compareVideo2_still'))
+  
+  #LR_seq <- make_time_sequence_data(these_LR_looks, time_bin_size = 100000, 
+  #                                  predictor_columns = pred_cols,
+  #                                  aois = "Left_Side",
+  #                                  summarize_by = "subjectID")
+  comp1_seq <- make_time_window_data(these_comp1, 
+                                     aois = myaois,
+                                       predictor_columns = pred_cols,
+                                       summarize_by = "subjectID")
+  comp2_seq <- make_time_window_data(these_comp2, 
+                                     aois = myaois,
+                                       predictor_columns = pred_cols,
+                                       summarize_by = "subjectID")
+  
+  this_seqdata = bind_rows("Comp1" = comp1_seq,
+                           "Comp2" = comp2_seq,.id='ResponseWindow')
+  this_seqdata <- this_seqdata %>%
+    filter(!is.na(Prop))%>%
+    group_by(.dots=pred_cols) %>%
+    dplyr::summarize(themean = mean(Prop, na.rm=TRUE), ci_down = bootdown(Prop), ci_up = bootup(Prop))
+  
+  return(this_seqdata)
+}
+
+#########################
+# GRAPHS (It's very exciting!)
+#########################
+
+#'Vanilla' (spaghetti plot with no Left-Right phase) in SameVerb
+main_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 
+                                              'SameVerbTest',
+                                              'Main',
+                                              c("Condition"), 
+                                              c("In_Manner_Side")), 
                       aes(y=themean,x=Time_in_Sec,color=Condition)) +
     geom_line(stat="identity") +
     facet_wrap(~ResponseWindow, scales = "free_x") +
-    geom_line(y=0.5, color='black')
+    geom_line(y=0.5, color='black') +
+    ylab("Looks to Target side, Same-Verb phase")
 
 ggsave('Graphs/Manner_v_Path_SV.jpg', main_plotSV, height = 4, width = 8)
- 
-#But, what's up with the timing? See histogram from above...
+
+
+##The first graph (main_plotSV) suggested that the 3 year olds might be a bit more 
+#'pathy' which would track with early verb literature (Hirsh-Paske & Golinkoff).  Is this
+#visible across the entire trial window (Comp1 and Comp2)?
+bar_age_plotSV <- ggplot(data = MakeProps(Probe_Data, 
+                                             'SameVerbTest',
+                                             'Main',
+                                             c("Age.Years", "Condition"), 
+                                             c("In_Manner_Side")), 
+                     aes(y=themean,x=Condition, fill=Age.Years)) +
+  geom_bar(stat="identity", position="dodge") +
+  geom_line(y=0.5, color='black')+
+  geom_errorbar(aes(ymin=ci_down, ymax=ci_up), colour="black", width=.1, position=position_dodge(.9)) + #Fiddle with the position_dodge val until it looks right
+  ylab("Looks to MANNER side, Same-Verb phase")+
+  ylim(0,1)
+  
+  
+bar_age_plotSV
+
+
+
+
 #So, let's try looking at ages instead (in black to show we're combining both conditions!)
-
-age_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 'SameVerbTest','Main',c("Age.Years")), 
-                    aes(y=themean,x=Time_in_Sec,linetype=Age.Years)) +
+#plotting by 'correctness' so we can
+age_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 
+                                             'SameVerbTest',
+                                             'Main',
+                                             c("Age.Years"), 
+                                             c("In_Target_Side")), 
+                     aes(y=themean,x=Time_in_Sec,linetype=Age.Years)) +
   geom_line(stat="identity") +
-  geom_line(y=0.5, color='black')
+  facet_wrap(~ResponseWindow, scales = "free_x") +
+  geom_line(y=0.5, color='black') +
+  ylab("Looks to CORRECT side, Same-Verb phase")
 
-ggsave('Graphs/3s_v_4s_SV.jpg', age_plotSV, height = 4, width = 8)
+ggsave('Graphs/3s_v_4s_SV_CORRECT.jpg', age_plotSV, height = 4, width = 8)
 
-#They seem different! Since we have that timing bug, it's most useful to plot the conditions separately...
+
+
+#Since we have that timing bug, it's most useful to plot the conditions separately...
 ageCond_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data, 'SameVerbTest','Main',c("Condition", "Age.Years")), 
                      aes(y=themean,x=Time_in_Sec,linetype=Age.Years, color=Condition)) +
   geom_line(stat="identity") +
@@ -608,7 +677,6 @@ ggsave('Graphs/Age_by_Condition_SV.jpg', ageCond_plotSV, height = 8, width = 8)
 
 
 #NOW do all that agian in the Bias phase!
-
 #'Vanilla' (plot with no Left-Right phase) in Bias
 main_plotBias <- ggplot(data = MakeTimeSequence(Probe_Data, 'Bias','Main',c("Condition")), 
                       aes(y=themean,x=Time_in_Sec,color=Condition)) +

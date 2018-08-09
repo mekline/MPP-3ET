@@ -70,12 +70,8 @@ childdata <- alldirs %>%
   mutate(datatype='Child')
 
 sch <- alldirs %>%
-  filter(str_detect(tolower(ID), 'schdummy')) %>%
-  mutate(datatype = 'schmanner')
-
-notr <- alldirs %>%
-  filter(str_detect(tolower(ID), 'notraining')) %>%
-  mutate(datatype = 'notraining')
+  filter(str_detect(tolower(ID), 'noeyetracker')) %>%
+  mutate(datatype = 'noeyetracker')
 
 Olivia <- alldirs %>%
   filter(str_detect(tolower(ID), 'olivia')) %>%
@@ -85,7 +81,7 @@ dt <- alldirs %>%
   filter(str_detect(tolower(ID), 'dummytesting')) %>%
   mutate(datatype = 'Dummytesting')
 
-alldirs <- rbind(sch, Olivia, dt, childdata, notr)
+alldirs <- rbind(sch, Olivia, dt, childdata)
 
 alldirs <- alldirs %>%
   mutate(ID = str_remove(ID, './')) #%>%
@@ -109,7 +105,7 @@ for(myID in alldirs$ID){
     myDatData <- read.csv(myDatFile, stringsAsFactors = FALSE)
       
     myTimestampData <- read.csv(myTimestampFile, stringsAsFactors = FALSE)
-    myTimestampData$dataType <- ifelse(str_detect(tolower(myID), 'schd'),'schmanners', 
+    myTimestampData$dataType <- ifelse(str_detect(tolower(myID), 'noeye'),'noeyetracker', 
                                 ifelse(str_detect(tolower(myID), '2018-07-23'),'childNoQT', 
                                 ifelse(str_detect(tolower(myID), '2018-07-25'),'childNoQT', 
                                 ifelse(str_detect(tolower(myID), 'child'),'child', 
@@ -205,6 +201,12 @@ AllData <- AllData %>%
   filter(phaseTimestamp == 'Main')%>%
   mutate(segType = ifelse(str_detect(description, 'Training'), "Training",
                           ifelse(str_detect(description, 'Bias'), "Bias","SameVerb")))
+
+#When eyetracker isn't attached the timestamps are fd up! Fix them!
+
+AllData <- AllData %>%
+  mutate(segment_length_in_sec = ifelse(dataType == 'noeyetracker', 
+                                  segment_length_in_sec*1000000, segment_length_in_sec))
 
 #Look at all segment types
 ggplot(data = AllData, aes(x=segment_length_in_sec, fill=Condition)) +

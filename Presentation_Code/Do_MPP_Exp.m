@@ -4,7 +4,7 @@ function Do_MPP_Exp()
 %We are adapting MPP to the eyetracker, very exciting!
 %MPP specific objects
 global expStart expTime CONDITION TOEXTEND EXTENDCONDITION
-global MAIN_ITEMS EXT_ITEMS ntrials timeCell RESOURCEFOLDER
+global MAIN_ITEMS EXT_ITEMS ntrials timeCell RESOURCEFOLDER LOGFILE
 
 %Some numeric versions of condition names for indexing into tables...
 
@@ -179,6 +179,7 @@ try
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
     for i=1:1 %SHORTER VERSION, PILOT 3/19 
     %for i=1:2
+         fprintf(LOGFILE, 'traintrialno \t%f\n', i);
          Trial_Practice(i);
          display(i)
      end
@@ -194,7 +195,8 @@ try
     for i=1:ntrials
         disp(i)
         disp(MAIN_ITEMS.verbName(i))
-        Trial_Omnibus(i,'WithBias');
+        fprintf(LOGFILE, 'trialno \t%f\n', i)
+        Trial_Omnibus(i,'BiasOnly');
         expTrial = GetSecs;
         expTime = expTrial - expStart;       
         Write_MPP_Trial(i, MAIN_ITEMS);
