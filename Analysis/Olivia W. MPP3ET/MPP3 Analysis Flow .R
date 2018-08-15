@@ -89,8 +89,8 @@ kids_to_process <- c('2018-07-09_ChildPilot5',
                     
 #Set your directories
 
-myRepo = '~/Dropbox/_DB_Projects/MannerPath-2ET/MannerPathPriming-3ET'
-#myRepo = '~/Desktop/MannerPathPriming-3ET'
+#myRepo = '~/Dropbox/_DB_Projects/MannerPath-2ET/MannerPathPriming-3ET'
+myRepo = '~/Desktop/MannerPathPriming-3ET'
 analysisDir = paste(myRepo, '/Analysis/Olivia W. MPP3ET',sep='')
 dataDir = paste(myRepo, '/Data',sep='')
 
@@ -618,7 +618,7 @@ main_plotSV <- ggplot(data = MakeTimeSequence(Probe_Data,
                                               'SameVerbTest',
                                               'Main',
                                               c("Condition"), 
-                                              c("In_Manner_Side")), 
+                                              c("In_Target_Side")), 
                       aes(y=themean,x=Time_in_Sec,color=Condition)) +
     geom_line(stat="identity") +
     facet_wrap(~ResponseWindow, scales = "free_x") +
@@ -636,11 +636,11 @@ bar_age_plotSV <- ggplot(data = MakeProps(Probe_Data,
                                              'Main',
                                              c("Age.Years", "Condition"), 
                                              c("In_Manner_Side")), 
-                     aes(y=themean,x=Condition, fill=Age.Years)) +
+                     aes(y=themean,x=Age.Years, fill=Condition)) +
   geom_bar(stat="identity", position="dodge") +
   geom_line(y=0.5, color='black')+
   geom_errorbar(aes(ymin=ci_down, ymax=ci_up), colour="black", width=.1, position=position_dodge(.9)) + #Fiddle with the position_dodge val until it looks right
-  ylab("Looks to MANNER side, Same-Verb phase")+
+  ylab("Looks to MANNER side, Same Verb Phase")+
   ylim(0,1)
   
   
